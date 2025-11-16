@@ -1,0 +1,135 @@
+/* reset-pass.css */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.wrapper {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+}
+
+.title-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.title-section h1 {
+    font-size: 50px;
+    color: #4CAF50;
+}
+
+.title-section h2 {
+    font-size: 24px;
+    margin-top: 10px;
+}
+
+.title-section .para {
+    font-size: 16px;
+    color: #777;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.input-group input:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+}
+
+.input-group .icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #4CAF50;
+}
+
+.submit-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #45a049;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    text-align: center;
+    margin-top: -15px;
+    margin-bottom: 10px;
+}
+/* Nút quay lại trang đăng nhập */
+.back-btn {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.back-btn:hover {
+    background-color: #45a049;
+}
+.input-group {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.input-group input[type="password"] {
+    padding-right: 30px; /* Khoảng cách để tạo không gian cho biểu tượng mắt */
+}
+
+.input-group i {
+    position: absolute;
+    right: 10px; /* Đặt icon bên phải */
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer; /* Thêm con trỏ chuột khi hover */
+    font-size: 18px; /* Cỡ chữ cho biểu tượng mắt */
+    color: #333; /* Màu của biểu tượng mắt */
+}
+
+.input-group i:hover {
+    color: #007bff; /* Thay đổi màu khi hover */
+}

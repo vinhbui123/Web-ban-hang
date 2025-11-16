@@ -1,0 +1,164 @@
+
+.filter-box {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    margin: 20px 0;
+}
+
+.filter-box form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.filter-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 500;
+}
+
+.filter-group select,
+.filter-group input[type="number"] {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.filter-group select:focus,
+.filter-group input:focus {
+    border-color: #4CAF50;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 10px;
+    margin-left: auto;
+}
+
+.btn-filter,
+.btn-reset {
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+}
+
+.btn-filter {
+    background: black ;
+    color: white ;
+    border: none;
+}
+
+.btn-filter:hover {
+    background: #333 ;
+}
+
+.btn-reset {
+    background: #f8f9fa;
+    color: #666;
+    border: 1px solid #ddd;
+}
+
+.btn-reset:hover {
+    background: #e9ecef;
+}
+
+@media (max-width: 768px) {
+    .filter-box form {
+        flex-direction: column;
+    }
+
+    .filter-group {
+        width: 100%;
+    }
+
+    .filter-buttons {
+        width: 100%;
+        justify-content: stretch;
+    }
+
+    .btn-filter,
+    .btn-reset {
+        flex: 1;
+        justify-content: center;
+    }
+}
+.top-view-box {
+    position: absolute;
+    right: 30px;
+    top: 100px;
+    width: 250px;
+    background: #fff9f4;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 15px;
+    z-index: 10;
+}
+
+.top-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #ff5e00;
+}
+
+.top-product {
+    display: flex;
+    margin-bottom: 12px;
+}
+
+.top-img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-right: 10px;
+}
+
+.top-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.top-name {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.top-view {
+    font-size: 13px;
+    color: #888;
+}

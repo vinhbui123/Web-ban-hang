@@ -1,0 +1,239 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    text-align: center;
+}
+
+.container {
+    max-width: 1000px;
+    min-height: 75vh;
+    margin: 10px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.purchase-title {
+    padding: 15px;
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    gap: 5px;
+}
+
+.tab {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.tab:hover {
+    background-color: #eeeeee;
+}
+
+.tab.active {
+    background-color: #FF5722; /* Blue background when active */
+    color: white;
+    font-weight: bold;
+    /*border-color: ;*/
+}
+
+.order-list {
+    padding: 10px;
+    text-align: left;
+}
+
+.order-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.order-details {
+    flex: 1;
+    text-align: left;
+    margin-left: 15px;
+}
+
+.product-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+    flex-shrink: 0;
+    margin-right: 15px;
+}
+.order-details p {
+    margin: 4px 0;
+}
+
+.order-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-top: 10px;
+    flex-wrap: wrap; /* Nếu nhiều nút sẽ xuống dòng đẹp */
+}
+
+.order-actions button {
+    padding: 5px 10px;
+    font-size: 13px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.order-actions button:hover {
+    background-color: #f5f5f5;
+}
+
+.order-actions .reorder {
+    background-color: #FF5722;
+    color: white;
+    border: none;
+}
+
+.order-actions .ratting {
+    background-color: #ffc107;
+    color: black;
+}
+
+.order-actions .pay {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.order-actions .cancel {
+    background-color: #f44336;
+    color: white;
+}
+
+.order-actions .connect {
+    background-color: #03A9F4;
+    color: white;
+}
+
+.order-details h3 {
+    margin: 0 0 5px;
+    font-size: 16px;
+}
+
+.order-item p {
+    margin: 5px 0;
+}
+
+.price {
+    font-weight: bold;
+    color: red;
+}
+
+.status {
+    color: #FF5722;
+    font-size: 14px;
+}
+
+.order-item[data-status='cancelled'] .status {
+    color: red;
+}
+
+.order-item[data-status='completed'] .status {
+    color: green;
+}
+
+.order-block {
+    border: 2px solid #FF5722;
+    margin-bottom: 30px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #fff9f6;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    color: #333;
+    font-size: 18px;
+    border-bottom: 2px dashed #ffccbc;
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+}
+
+.order-item:last-child {
+    border-bottom: none;
+}
+
+.details-header {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+ }
+
+.summary-divider {
+    border: none;
+    border-top: 2px dashed #ccc;
+    margin: 15px 0;
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+    border-bottom: 2px dashed #ffccbc;
+    color: #333;
+}
+
+.header-left h3.order-id {
+    margin: 0;
+    font-size: 18px;
+    color: #FF5722;
+    font-weight: bold;
+}
+
+.order-date {
+    font-size: 13px;
+    color: #888;
+    margin-top: 4px;
+}
+
+.header-right {
+    text-align: right;
+}
+
+.status-label {
+    font-weight: bold;
+    font-size: 14px;
+    margin-right: 5px;
+}
+
+.status {
+    font-weight: bold;
+    font-size: 14px;
+    color: #FF5722;
+}
+
+.status-list-icon {
+    font-size: 16px;
+    color: #007bff;
+    transition: color 0.2s ease;
+}
+
+.status-list-icon:hover {
+    color: #0056b3;
+}
