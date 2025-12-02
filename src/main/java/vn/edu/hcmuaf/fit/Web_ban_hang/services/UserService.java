@@ -35,6 +35,25 @@ public class UserService {
         return null;
     }
 
+    // Add this method to your UserService.java class
+    public String validateUpdateProfile(String firstName, String lastName, String newEmail, String currentEmail) {
+        if (firstName == null || firstName.isEmpty()) return "Tên không được để trống.";
+        if (lastName == null || lastName.isEmpty()) return "Họ không được để trống.";
+        if (newEmail == null || newEmail.isEmpty()) return "Email không được để trống.";
+
+        // Check email format
+        if (!newEmail.matches("^[\\w-]+(?:\\.[\\w-]+)*@(?:[\\w-]+\\.)+[a-zA-Z]{2,7}$")) {
+            return "Email không hợp lệ.";
+        }
+
+        // ONLY check if email exists if the user is changing it
+        if (!newEmail.equals(currentEmail) && isEmailExists(newEmail)) {
+            return "Email đã được sử dụng bởi tài khoản khác.";
+        }
+
+        return null;
+    }
+
     // Kiểm tra email có tồn tại
     public boolean isEmailExists(String email) {
         return userDao.isEmailExists(email);

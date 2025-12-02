@@ -36,8 +36,8 @@
         </div>
         <hr class="header-line"/>
 
-        <!-- Sửa lại đúng sessionScope.user -->
-        <c:set var="user" value="${sessionScope.user}" />
+        <!-- Kiểm tra có tạo thông tin người dùng mới overwrite thông tin cũ không thì lấy thông tin từ session để cập nhật lại -->
+        <c:set var="user" value="${requestScope.user != null ? requestScope.user : sessionScope.user}" />
 
         <div class="account-body">
             <!-- Thông tin tài khoản -->
