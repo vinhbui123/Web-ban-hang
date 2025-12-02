@@ -52,7 +52,7 @@ public class AccountController extends HttpServlet {
         String lastName = parts.length > 1 ? parts[1] : "";
 
         // 2. Validate using the NEW method (Pass current email to allow keeping it)
-        String errorMsg = userService.validateUpdateProfile(firstName, lastName, fullName, email);
+        String errorMsg = userService.validateUpdateProfile(firstName, lastName, phoneNumber);
 
         if (errorMsg != null) {
             handleUpdateUserError(request, response, errorMsg);

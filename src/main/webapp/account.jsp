@@ -52,7 +52,7 @@
                 </div>
                 <div class="login__field">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" class="login__input" value="${user.email}">
+                    <input type="email" id="email" name="email" class="login__input" value="${user.email}" readonly>
                 </div>
                 <div class="login__field">
                     <label for="phoneNumber">Số điện thoại</label>

@@ -9,7 +9,6 @@ public class PurchaseService {
 
     PurchaseDao purchaseDao = new PurchaseDao();
 
-
     public List<OrderDTO> getAllPurchaseByUserID(int userID) {
         return purchaseDao.getAllPurchaseByUser(userID);
     }

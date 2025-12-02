@@ -1,4 +1,4 @@
-package vn.edu.hcmuaf.fit.Web_ban_hang.controller.user.login;
+package vn.edu.hcmuaf.fit.Web_ban_hang.controller.user.account;
 
 import vn.edu.hcmuaf.fit.Web_ban_hang.services.UserService;
 import jakarta.servlet.ServletException;

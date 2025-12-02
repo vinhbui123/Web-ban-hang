@@ -6,11 +6,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Header</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Header</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/index.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
     <script>
         const contextPath = "${pageContext.request.contextPath}";
     </script>
@@ -38,11 +38,11 @@
                                 <span class="account-icon">
                                   <c:choose>
                                       <c:when test="${user.getUsername() != null}">
-                                          <a href="account"><i
+                                          <a href="${pageContext.request.contextPath}/account"><i
                                                   class="fas fa-user"></i></a>
                                       </c:when>
                                       <c:otherwise>
-                                          <a href="login"><i class="fas fa-user"></i></a>
+                                          <a href="${pageContext.request.contextPath}/login"><i class="fas fa-user"></i></a>
                                       </c:otherwise>
                                   </c:choose>
                                 </span>
@@ -51,11 +51,11 @@
                             <c:when test="${not empty user.getUsername()}">
                                 <span class="account-text">Xin chào, ${user.getFirstName()} ${user.getLastName()}!</span>
                                 <a href="${pageContext.request.contextPath}/change-password"><span class="account-menu"> Đổi mật khẩu </span></a>
-                                <a href="logout"><span class="account-menu"> Đăng Xuất <i
+                                <a href="${pageContext.request.contextPath}/logout"><span class="account-menu"> Đăng Xuất <i
                                         class="fas fa-sign-out-alt"></i></span></a>
                             </c:when>
                             <c:otherwise>
-                                <span class="account-text"><a href="login">Đăng Nhập</a> / <a href="login">Đăng Ký</a></span>
+                                <span class="account-text"><a href="${pageContext.request.contextPath}/login">Đăng Nhập</a> / <a href="${pageContext.request.contextPath}/register">Đăng Ký</a></span>
                                 <c:if test="${empty user.getUsername()}">
                                     <span> Xin Chào khách hàng </span>
                                 </c:if>
