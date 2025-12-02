@@ -1,0 +1,322 @@
+/* Reset basic styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    max-width: 100%;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Form */
+.account {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column; /* Ensure buttons stay below the other content */
+}
+
+/* Account Header */
+.account-header {
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.account-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.account-subtitle {
+    margin-top: 5px;
+}
+
+/* Avatar Section */
+.avatar-section {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center;  /* Center items horizontally */
+    margin-bottom: 10px;
+    position: relative; /* To position the ::before pseudo-element */
+}
+
+.account-body {
+    position: relative; /* set position relative for ::before absolute position */
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+
+}
+
+.account-body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 915px; /* Position 10px away from avatar section */
+    height: 100%; /* Make the line full height */
+    border-left: 1px solid #ccc; /* Add a left border to simulate a vertical line */
+}
+
+.avatar-container {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #ccc;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.avatar-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+/* Avatar upload label */
+.avatar-upload-label {
+    cursor: pointer;
+    display: inline-block;
+    background-color: white;
+    color: black;
+    border: 1px solid gray;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+    white-space: nowrap; /* prevent wrapping in label */
+}
+
+.avatar-upload-label:hover {
+    background-color: lightgray;
+}
+
+
+/* Hide input */
+.avatar-upload {
+    display: none;
+}
+
+
+.login__field {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 15px; /* Added margin-bottom for spacing */
+    width: 100%; /* Ensure each field takes full width of its container */
+}
+
+.login__field label {
+    flex: 0 0 150px; /* Fixed width for labels */
+    margin-right: 15px; /* space between label and input */
+    text-align: right;
+}
+
+.login__input {
+    flex: 1; /* Allow input to fill remaining space */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #f9f9f9;
+}
+
+.login__input:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+/* Button Styles */
+.btn-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    padding: 0;
+    background: #fff;
+    border: none;
+    font-size: 14px;
+    color: #444;
+    position: relative;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.15s;
+    min-width: 110px;
+}
+
+.button:active {
+    background: #e1e1e1;
+}
+
+.button__text,
+.button__icon {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.button__icon {
+    font-size: 1.2em;
+    margin: 5px; /* Add space to the right of the icon */
+
+}
+
+
+.btn-save {
+    padding: 15px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s;
+    flex: 0;
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-save:hover {
+    background-color: #388e3c;
+}
+
+
+/* Giao diện phần thân của Hồ sơ */
+.account-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+/* Phần bên trái (Thông tin tài khoản) */
+.account-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Phần bên phải (Ảnh đại diện) */
+.avatar-section {
+    flex: 0 0 200px;
+    text-align: center;
+    position:relative;
+}
+
+.avatar-container {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #ccc;
+    margin: 0 auto 10px;
+}
+
+.avatar-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Đường ngang dưới tiêu đề */
+.header-line {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 5px 0;
+    margin-bottom: 15px; /* Added margin-bottom here */
+}
+
+/*button chon anh*/
+.btn-click {
+    padding: 8px 15px;
+    cursor: pointer;
+    justify-content: center;
+
+}
+
+.discount-main {
+    max-width: 1200px;
+    margin: 30px auto;
+}
+
+.discount-main h3 {
+    margin-bottom: 10px;
+}
+
+.discount-cointainer {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.discount-card {
+    width: 280px;
+    background-color: #fbe5e9;
+    border: 1px dashed #cfbcc0;
+    border-radius: 5px;
+    padding: 10px;
+    position: relative;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+}
+
+.coupon-discount {
+    font-weight: bold;
+    color: #e74c3c;
+    margin-bottom: 5px;
+}
+
+.discount-requirement,
+.code,
+.expiration {
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.discount-code {
+    font-weight: bold;
+    color: #dd4b39;
+}
+
+.copy-btn {
+    background-color: #e28572;
+    color: white;
+    border: none;
+    padding: 2px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    float: right;
+}
+
+.copy-btn:hover {
+    background-color: #d46a59;
+}
