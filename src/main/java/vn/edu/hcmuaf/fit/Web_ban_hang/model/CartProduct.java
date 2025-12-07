@@ -2,6 +2,9 @@ package vn.edu.hcmuaf.fit.Web_ban_hang.model;
 
 import java.io.Serializable;
 
+/**
+ * Model đại diện cho 1 sản phẩm trong giỏ hàng
+ */
 public class CartProduct implements Serializable {
     private int id;
     private String name;
@@ -13,25 +16,10 @@ public class CartProduct implements Serializable {
     private int stock;
 
     public CartProduct() {
-        this.selected = true; // Default to selected when added to cart
+        this.selected = true; // Mặc định được chọn khi thêm vào giỏ
     }
 
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
-    public boolean isSelected() {
-        return selected;
-    }
-
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-    }
-
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -44,8 +32,8 @@ public class CartProduct implements Serializable {
         return name;
     }
 
-    public void setName(String title) {
-        this.name = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getQuantity() {
@@ -70,5 +58,39 @@ public class CartProduct implements Serializable {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    /**
+     * Tính giá sau khi giảm giá
+     */
+    public int getDiscountedPrice() {
+        if (discount > 0) {
+            return price - (price * discount / 100);
+        }
+        return price;
     }
 }

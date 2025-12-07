@@ -30,8 +30,8 @@ public class ProductDao {
                 "ORDER BY p.id";
 
         try (Connection connection = DBConnect.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query);
-             ResultSet rs = statement.executeQuery()) {
+                PreparedStatement statement = connection.prepareStatement(query);
+                ResultSet rs = statement.executeQuery()) {
 
             while (rs.next()) {
                 int productId = rs.getInt("product_id");
@@ -71,10 +71,10 @@ public class ProductDao {
     }
 
     // Phương thức lấy sản phẩm theo id
-    public static Product getById(int id) {
+    public Product getById(int id) {
         String query = "SELECT * FROM products WHERE id = ?";
         try (Connection connection = DBConnect.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+                PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, id);
 
             try (ResultSet rs = statement.executeQuery()) {
@@ -116,7 +116,7 @@ public class ProductDao {
                 "ORDER BY p.id ASC";
 
         try (Connection connection = DBConnect.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+                PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, categoryId);
             ResultSet rs = statement.executeQuery();
@@ -162,7 +162,7 @@ public class ProductDao {
         List<Color> colors = new ArrayList<>();
         String query = "SELECT pc.color_id, c.name FROM product_color pc JOIN colors c ON c.id = pc.color_id WHERE pc.product_id = ?";
         try (Connection connection = DBConnect.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query)) {
+                PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -180,7 +180,7 @@ public class ProductDao {
         List<Material> materials = new ArrayList<>();
         String query = "SELECT pm.material_id, m.name FROM product_materials pm JOIN materials m ON m.id = pm.material_id WHERE product_id = ?";
         try (Connection connection = DBConnect.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query)) {
+                PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -198,7 +198,7 @@ public class ProductDao {
         List<String> subImages = new ArrayList<>();
         String query = "SELECT img_path FROM images WHERE product_id = ?";
         try (Connection connection = DBConnect.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query)) {
+                PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -211,7 +211,7 @@ public class ProductDao {
     public void increaseView(int productId) {
         String query = "UPDATE products SET view = view + 1 WHERE id=?";
         try (Connection connection = DBConnect.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query)) {
+                PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, productId);
             stmt.executeUpdate();
             Product p = getById(productId);
@@ -303,7 +303,7 @@ public class ProductDao {
         List<Product> re = new ArrayList<>();
         String query = "SELECT id, name, price, discount, view, img FROM products ORDER BY view DESC LIMIT ?";
         try (Connection connection = DBConnect.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+                PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, limit);
             ResultSet rs = statement.executeQuery();
 
@@ -329,7 +329,7 @@ public class ProductDao {
         String sql = "SELECT id, name, price, discount, view, img, quantity FROM products LIMIT ?, ?";
 
         try (Connection conn = DBConnect.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, offset);
             stmt.setInt(2, size);
             ResultSet rs = stmt.executeQuery();
@@ -355,8 +355,8 @@ public class ProductDao {
     public int countProducts() {
         String sql = "SELECT COUNT(*) FROM products";
         try (Connection conn = DBConnect.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()) {
             if (rs.next()) {
                 return rs.getInt(1);
             }
@@ -375,7 +375,7 @@ public class ProductDao {
                 "WHERE i.quantity > 0";
 
         try (Connection connection = DBConnect.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query)) {
+                PreparedStatement stmt = connection.prepareStatement(query)) {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -404,7 +404,7 @@ public class ProductDao {
         String query = "SELECT id, name, price, discount, view, img FROM products WHERE view >= ? ORDER BY view DESC";
 
         try (Connection connection = DBConnect.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+                PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setInt(1, minView);
             ResultSet rs = statement.executeQuery();
@@ -438,8 +438,8 @@ public class ProductDao {
 
         List<Product> products = new ArrayList<>();
         try (Connection conn = DBConnect.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
+                PreparedStatement stmt = conn.prepareStatement(query);
+                ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 Product p = new Product();
                 p.setId(rs.getInt("id"));

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ProductService {
 
-    static ProductDao productDao = new ProductDao();
+    private final ProductDao productDao = new ProductDao();
 
     public List<Product> getAll() {
         return productDao.getAll();
@@ -16,7 +16,7 @@ public class ProductService {
 
     // Lấy sản phẩm theo ID
     public Product getById(int id) {
-        return ProductDao.getById(id);
+        return productDao.getById(id);
     }
 
     // Lấy sản phẩm theo danh mục
@@ -55,9 +55,11 @@ public class ProductService {
     public List<Product> getProductsInStock() {
         return productDao.getProductsInStock();
     }
+
     public List<Product> getProductsViewedAbove(int minView) {
         return productDao.getProductsViewedAbove(minView);
     }
+
     public List<Product> getTopRatedProducts() {
         return productDao.getTopRatedProducts();
     }
