@@ -1,0 +1,245 @@
+/* Cart Header */
+.cart-header {
+    display: flex;
+    width: 70%;
+    text-align: left;
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+}
+
+.cart-header .logo {
+    font-size: 2em;
+    font-weight: bold;
+    color: #050403;
+}
+
+.cart-header .title {
+    font-size: 2em;
+    color: #333;
+    margin-left: 10px;
+}
+
+/* Cart Container */
+.cart-container {
+    max-width: 70%;
+    margin: 20px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.menu-info, .cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.menu-info {
+    background-color: #FFFFFF;
+    font-weight: bold;
+    text-align: center;
+}
+
+.menu-info > div,
+.cart-item > div {
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+/* Checkbox column */
+.checkbox-info {
+    flex-basis: 5%;
+    text-align: center;
+}
+
+/* Product info column */
+.product-info {
+    flex-basis: 30%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+}
+
+.product-img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.product-detail {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-name {
+    font-weight: bold;
+    font-size: 15px;
+    color: #333;
+}
+
+.stock-quantity {
+    font-size: 13px;
+    color: #888;
+    margin-top: 3px;
+}
+
+/* Price column */
+.price-info {
+    flex-basis: 20%;
+    text-align: center;
+}
+
+/* Quantity column */
+.quantity-info {
+    flex-basis: 20%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.quantity-info button {
+    background-color: #ddd;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.quantity-info button:hover {
+    background-color: #ccc;
+}
+
+.quantity-info input {
+    width: 50px;
+    text-align: center;
+    margin: 0 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+/* Total column */
+.total-info {
+    flex-basis: 15%;
+    text-align: center;
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+/* Action column */
+.action-info {
+    flex-basis: 10%;
+    text-align: center;
+}
+
+/* Remove button */
+.remove-btn {
+    background-color: #f9f9f9;
+    color: red;
+    border: 1px solid red;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.remove-btn:hover {
+    background-color: #ffe6e6;
+}
+
+/* Cart Summary */
+.cart-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #fafafa;
+    border-top: 1px solid #eee;
+}
+
+.left-summary {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.product-total {
+    font-size: 16px;
+    color: #333;
+}
+
+.product-total span {
+    font-weight: bold;
+    color: #e74c3c;
+}
+
+/* Checkout Button */
+.checkout-btn {
+    background-color: #FF5722;
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.checkout-btn:hover {
+    background-color: #e64a19;
+}
+
+/* Empty cart message */
+.empty-cart {
+    text-align: center;
+    padding: 50px;
+    color: #666;
+}
+
+.empty-cart p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.continue-shopping-btn {
+    background-color: #050403;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.continue-shopping-btn:hover {
+    background-color: #333;
+}
+
+/* Update form in quantity */
+.quantity-form {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-update {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.btn-update:hover {
+    background-color: #0056b3;
+}
