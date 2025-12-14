@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css">
 <footer>
     <div class="container-footer">
         <div class="footer-content">
@@ -8,7 +8,7 @@
 
             <ul class="address-footer">
                 <li><i class="fa-solid fa-location-dot"></i>Stown Thủ Đức, Bình Chiểu, Thủ Đức, TPHCM</li>
-                <li><i class="fa-solid fa-phone"></i>0343031010</li>
+                <li><i class="fa-solid fa-phone"></i>0343 031 030</li>
                 <li><i class="fa-solid fa-envelope"></i>handmadestudio@gmail.com</li>
             </ul>
         </div>

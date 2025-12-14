@@ -8,9 +8,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import vn.edu.hcmuaf.fit.Web_ban_hang.model.Product;
 import vn.edu.hcmuaf.fit.Web_ban_hang.services.ProductService;
-import vn.edu.hcmuaf.fit.Web_ban_hang.session.Cart;
+import vn.edu.hcmuaf.fit.Web_ban_hang.services.CartService;
 import vn.edu.hcmuaf.fit.Web_ban_hang.utils.ReadJsonUtil;
 
 import java.io.IOException;
@@ -20,6 +22,7 @@ import java.util.Map;
 
 @WebServlet(name = "CartController", urlPatterns = { "/cart", "/api/cart" })
 public class CartController extends HttpServlet {
+    private static final Logger log = LoggerFactory.getLogger(CartController.class);
     private final ProductService productService = new ProductService();
     private final Gson gson = new Gson();
 
@@ -40,7 +43,7 @@ public class CartController extends HttpServlet {
             return;
         }
 
-        Cart cart = (Cart) session.getAttribute("cart");
+        CartService cart = (CartService) session.getAttribute("cart");
         if (cart != null) {
             cart.refreshStock();
         } else {
@@ -52,7 +55,7 @@ public class CartController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
         String reqPath = request.getServletPath();
 
         // CHECK LOGIN
@@ -99,9 +102,9 @@ public class CartController extends HttpServlet {
             }
 
             HttpSession session = request.getSession();
-            Cart cart = (Cart) session.getAttribute("cart");
+            CartService cart = (CartService) session.getAttribute("cart");
             if (cart == null) {
-                cart = new Cart();
+                cart = new CartService();
                 session.setAttribute("cart", cart);
             }
 
@@ -149,7 +152,7 @@ public class CartController extends HttpServlet {
             out.print(gson.toJson(result));
 
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             Map<String, Object> error = new HashMap<>();
             error.put("status", false);
             error.put("message", "Lỗi xử lý: " + e.getMessage());
@@ -164,20 +167,22 @@ public class CartController extends HttpServlet {
             try {
                 int id = Integer.parseInt(request.getParameter("id"));
                 HttpSession session = request.getSession();
-                Cart cart = (Cart) session.getAttribute("cart");
+                CartService cart = (CartService) session.getAttribute("cart");
                 if (cart != null)
                     cart.remove(id);
-            } catch (Exception ignored) {
+            } catch (NumberFormatException e) {
+                log.error(e.getMessage());
             }
         } else if ("update".equals(action)) {
             try {
                 int id = Integer.parseInt(request.getParameter("id"));
                 int qty = Integer.parseInt(request.getParameter("quantity"));
                 HttpSession session = request.getSession();
-                Cart cart = (Cart) session.getAttribute("cart");
+                CartService cart = (CartService) session.getAttribute("cart");
                 if (cart != null)
                     cart.update(id, qty);
-            } catch (Exception ignored) {
+            } catch (Exception e) {
+                log.error(e.getMessage());
             }
         }
         response.sendRedirect("cart");

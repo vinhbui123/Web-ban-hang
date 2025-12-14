@@ -1,9 +1,8 @@
-package vn.edu.hcmuaf.fit.Web_ban_hang.session;
+package vn.edu.hcmuaf.fit.Web_ban_hang.services;
 
 import vn.edu.hcmuaf.fit.Web_ban_hang.dao.InventoryDao;
 import vn.edu.hcmuaf.fit.Web_ban_hang.model.CartProduct;
 import vn.edu.hcmuaf.fit.Web_ban_hang.model.Product;
-import vn.edu.hcmuaf.fit.Web_ban_hang.services.ProductService;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,10 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Quản lý giỏ hàng trong session
- */
-public class Cart implements Serializable {
+public class CartService implements Serializable {
     private Map<Integer, CartProduct> data = new HashMap<>();
 
     public boolean add(Product p, int quantity) {

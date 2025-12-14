@@ -51,7 +51,6 @@ public class ProductDao {
                     p.setMaterials(new ArrayList<>());
                     productMap.put(productId, p);
                 }
-                System.out.println(productId);
                 int materialId = rs.getInt("material_id");
                 String materialName = rs.getString("material_name");
 
@@ -256,10 +255,6 @@ public class ProductDao {
                         }
 
                         throw var12;
-                    }
-
-                    if (rs != null) {
-                        rs.close();
                     }
                 } catch (Throwable var13) {
                     if (statement != null) {

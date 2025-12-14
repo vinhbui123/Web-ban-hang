@@ -1,0 +1,100 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 50px;
+}
+
+.inner {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    max-width: 750px;
+    margin: auto;
+}
+
+.register-title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 22px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+form {
+    width: 100%;
+}
+
+.form-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.form-wrapper {
+    flex: 1;
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.form-control:focus {
+    border-color: #050403;
+}
+
+.btn-register button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background-color: #050403;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-register button:hover {
+    background-color: #333;
+}
+
+.box-submit {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.box-submit input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.box-submit label {
+    font-size: 12px;
+    color: #333;
+}
+.checkbox label{
+    font-size: 13px;
+    font-weight: lighter;
+    padding: 10px;
+}

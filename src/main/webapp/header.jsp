@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
-<%--<%@ page import="vn.edu.hcmuaf.fit.Web_ban_hang.dao.session.Cart" %>--%>
 <%@ page import="vn.edu.hcmuaf.fit.Web_ban_hang.model.User" %>
 
 <!DOCTYPE html>
@@ -10,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Header</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/index.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
     <script>
         const contextPath = "${pageContext.request.contextPath}";
     </script>
@@ -38,7 +37,8 @@
                                 <span class="account-icon">
                                   <c:choose>
                                       <c:when test="${user.getUsername() != null}">
-                                          <a href="${pageContext.request.contextPath}/account"><i class="fas fa-user"></i></a>
+                                          <a href="${pageContext.request.contextPath}/account"><i
+                                                  class="fas fa-user"></i></a>
                                       </c:when>
                                       <c:otherwise>
                                           <a href="${pageContext.request.contextPath}/login"><i class="fas fa-user"></i></a>
@@ -50,11 +50,14 @@
                             <c:when test="${not empty user.getUsername()}">
                                 <span class="account-text">Xin chào, ${user.getFirstName()} ${user.getLastName()}!</span>
                                 <a href="${pageContext.request.contextPath}/change-password"><span class="account-menu"> Đổi mật khẩu </span></a>
-                                <a href="${pageContext.request.contextPath}/logout"><span class="account-menu"> Đăng Xuất <i class="fas fa-sign-out-alt"></i></span></a>
+                                <a href="${pageContext.request.contextPath}/logout"><span class="account-menu"> Đăng Xuất <i
+                                        class="fas fa-sign-out-alt"></i></span></a>
                             </c:when>
                             <c:otherwise>
                                 <span> Xin Chào khách hàng </span>
-                                <span class="account-text"><a href="login">Đăng Nhập</a> / <a href="login">Đăng Ký</a></span>
+                                <span class="account-text"><a
+                                        href="${pageContext.request.contextPath}/login">Đăng Nhập</a> / <a
+                                        href="${pageContext.request.contextPath}/register">Đăng Ký</a></span>
                             </c:otherwise>
                         </c:choose>
                     </div>
@@ -73,8 +76,8 @@
                         <span class="cart-text">Đơn Mua</span>
                     </div>
                 </c:if>
-                <c:set var="user" value="${sessionScope.user}" />
-                <c:if test="${user != null && user.role != null && user.role.id != 2}">
+                <c:set var="user" value="${sessionScope.user}"/>
+                <c:if test="${user != null && user.role.id == 1}">
                     <a href="${pageContext.request.contextPath}/adminProduct" class="admin-btn">
                         <i class="fa-solid fa-user-tie"></i> Trang Quản Trị
                     </a>
