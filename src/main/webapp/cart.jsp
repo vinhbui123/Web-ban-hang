@@ -129,7 +129,7 @@
                                             <a href="${pageContext.request.contextPath}/cart?action=remove&id=${cp.id}"
                                                 class="remove-btn"
                                                 onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?')">
-                                                <i class="fas fa-trash"></i> Xoá
+                                                Xoá
                                             </a>
                                         </div>
                                     </div>
@@ -149,7 +149,7 @@
                                         </span>
                                     </div>
                                     <a href="${pageContext.request.contextPath}/checkout" class="checkout-btn">
-                                        <i class="fas fa-credit-card"></i> Thanh Toán
+                                        Thanh Toán
                                     </a>
                                 </div>
                             </c:otherwise>

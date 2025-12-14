@@ -2,9 +2,6 @@ package vn.edu.hcmuaf.fit.Web_ban_hang.model;
 
 import java.io.Serializable;
 
-/**
- * Model đại diện cho 1 sản phẩm trong giỏ hàng
- */
 public class CartProduct implements Serializable {
     private int id;
     private String name;
@@ -19,7 +16,6 @@ public class CartProduct implements Serializable {
         this.selected = true; // Mặc định được chọn khi thêm vào giỏ
     }
 
-    // Getters and Setters
     public int getId() {
         return id;
     }

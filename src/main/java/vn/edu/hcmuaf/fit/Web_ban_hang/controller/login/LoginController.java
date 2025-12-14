@@ -6,13 +6,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-//import vn.edu.hcmuaf.fit.Web_ban_hang.controller.cart.Cart;
+import vn.edu.hcmuaf.fit.Web_ban_hang.session.Cart;
 import vn.edu.hcmuaf.fit.Web_ban_hang.model.User;
 
 import vn.edu.hcmuaf.fit.Web_ban_hang.services.UserService;
 
 import java.io.IOException;
-import java.time.Instant;
 
 @WebServlet(name = "LoginController", urlPatterns = "/login")
 public class LoginController extends HttpServlet {
@@ -29,7 +28,10 @@ public class LoginController extends HttpServlet {
         User user = userService.authenticateUser(username, password);
 
         if (user != null) {
-//            session.setAttribute("cart", new Cart());
+            // Kiểm tra xem đã có giỏ hàng (từ lúc khách chưa đăng nhập) chưa
+            if (session.getAttribute("cart") == null) {
+                session.setAttribute("cart", new Cart());
+            }
             session.setAttribute("user", user);
 
             response.sendRedirect(request.getContextPath() + "/home");
