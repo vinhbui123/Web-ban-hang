@@ -29,6 +29,4 @@ public class Color {
                 ", color='" + name + '\'' +
                 '}';
     }
-
-
 }

@@ -8,19 +8,23 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import vn.edu.hcmuaf.fit.Web_ban_hang.services.UserService;
 import vn.edu.hcmuaf.fit.Web_ban_hang.model.User;
-import java.io.File;
+
 import java.io.IOException;
-import java.nio.file.Paths;
+import java.io.InputStream;
+import java.util.Base64; // Import this for Encoding
 
 @WebServlet(name = "AccountController", urlPatterns = "/account")
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024,
-        maxFileSize = 1024 * 1024 * 5,
+        maxFileSize = 1024 * 1024 * 5, // 5MB
         maxRequestSize = 1024 * 1024 * 10
 )
 public class AccountController extends HttpServlet {
+    private static final Logger log = LoggerFactory.getLogger(AccountController.class);
     private UserService userService;
 
     @Override
@@ -39,49 +43,51 @@ public class AccountController extends HttpServlet {
             return;
         }
 
-        request.setCharacterEncoding("UTF-8"); // Ensure Vietnamese characters are read correctly
+        request.setCharacterEncoding("UTF-8");
 
         // 1. Get Inputs
         String fullName = request.getParameter("fullName");
-        String email = request.getParameter("email");
+        String email = request.getParameter("email"); // Handle null if disabled in JSP!
         String phoneNumber = request.getParameter("phoneNumber");
 
-        // Split Full Name into First/Last
         String[] parts = fullName.trim().split(" ", 2);
         String firstName = parts.length > 0 ? parts[0] : "";
         String lastName = parts.length > 1 ? parts[1] : "";
 
-        // 2. Validate using the NEW method (Pass current email to allow keeping it)
+        // 2. Validate
         String errorMsg = userService.validateUpdateProfile(firstName, lastName, phoneNumber);
-
         if (errorMsg != null) {
             handleUpdateUserError(request, response, errorMsg);
             return;
         }
 
-        // 3. Update User Object
+        // 3. Update User Object Basic Info
         user.setFirstName(firstName);
         user.setLastName(lastName);
-        user.setEmail(email);
+        if (email != null && !email.trim().isEmpty()) user.setEmail(email);
         user.setPhoneNumber(phoneNumber);
         user.setAddress(request.getParameter("address"));
         user.setBio(request.getParameter("bio"));
 
-        // 4. Handle Avatar Upload
+        // ================================================================
+        // 4. Handle Avatar Upload (CONVERT TO BASE64 STRING)
+        // ================================================================
         Part avatarPart = request.getPart("avatarUpload");
         if (avatarPart != null && avatarPart.getSize() > 0) {
-            String originalFileName = Paths.get(avatarPart.getSubmittedFileName()).getFileName().toString();
-            String newFileName = System.currentTimeMillis() + "_" + originalFileName;
+            try (InputStream inputStream = avatarPart.getInputStream()) {
+                // Read all bytes from the uploaded file
+                byte[] imageBytes = inputStream.readAllBytes();
 
-            String uploadPath = request.getServletContext().getRealPath("/images/avatars");
-            File uploadDir = new File(uploadPath);
-            if (!uploadDir.exists()) uploadDir.mkdirs();
+                // Convert bytes to Base64 String
+                String base64Image = Base64.getEncoder().encodeToString(imageBytes);
 
-            String filePath = uploadPath + File.separator + newFileName;
-            avatarPart.write(filePath);
-
-            user.setAvatar("images/avatars/" + newFileName);
+                // Save this LONG string into the User object
+                user.setAvatar(base64Image);
+            } catch (IOException e) {
+                log.error(e.getMessage());
+            }
         }
+        // ================================================================
 
         // 5. Update Database
         boolean success = this.userService.updateUser(user);
@@ -92,12 +98,13 @@ public class AccountController extends HttpServlet {
             return;
         }
 
-        // 6. Update Session and Success
-        session.setAttribute("user", user); // Ensure you update "user", not "currentUser" if JSP uses "user"
+        // 6. Update Session
+        session.setAttribute("user", user);
         request.setAttribute("successMessage", "Thông tin của bạn đã được cập nhật thành công.");
         request.getRequestDispatcher("account.jsp").forward(request, response);
     }
 
+    // ... keep doGet and handleUpdateUserError the same ...
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -105,19 +112,14 @@ public class AccountController extends HttpServlet {
     }
 
     private void handleUpdateUserError(HttpServletRequest request, HttpServletResponse response, String error) throws ServletException, IOException {
-        // 1. Send the error message (Use "errorMessage" to match JSP source: 3)
         request.setAttribute("errorMessage", error);
-
-        // 2. Create a temporary User object to hold the input values
         User tempUser = new User();
 
-        // 3. Manually parse the Name again (since the form sends fullName, not firstName)
         String fullName = request.getParameter("fullName");
         String[] parts = (fullName != null) ? fullName.trim().split(" ", 2) : new String[]{"", ""};
         String firstName = parts.length > 0 ? parts[0] : "";
         String lastName = parts.length > 1 ? parts[1] : "";
 
-        // 4. Set the values user just typed into the temp object
         tempUser.setFirstName(firstName);
         tempUser.setLastName(lastName);
         tempUser.setEmail(request.getParameter("email"));
@@ -125,18 +127,14 @@ public class AccountController extends HttpServlet {
         tempUser.setAddress(request.getParameter("address"));
         tempUser.setBio(request.getParameter("bio"));
 
-        // 5. Keep the original avatar and username (since they aren't changing in the text inputs)
         HttpSession session = request.getSession();
         User realUser = (User) session.getAttribute("user");
         if (realUser != null) {
             tempUser.setAvatar(realUser.getAvatar());
             tempUser.setUsername(realUser.getUsername());
+            if (tempUser.getEmail() == null) tempUser.setEmail(realUser.getEmail());
         }
-
-        // 6. OVERRIDE the "user" attribute in the Request scope
-        // This makes ${user.email} in JSP show the typed email, not the session email
         request.setAttribute("user", tempUser);
-
         request.getRequestDispatcher("account.jsp").forward(request, response);
     }
 }

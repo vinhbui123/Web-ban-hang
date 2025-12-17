@@ -152,10 +152,6 @@ public class UserDao {
         return queryOne("SELECT * FROM users WHERE username = ?", username);
     }
 
-    public User getUserByEmail(String email) {
-        return queryOne("SELECT * FROM users WHERE email = ?", email);
-    }
-
     public List<User> getAllUsers() {
         return queryList("SELECT * FROM users");
     }
@@ -216,10 +212,10 @@ public class UserDao {
 
     // 5. Update Methods
     public boolean updateUser(User user) {
-        String sql = "UPDATE users SET first_name = ?, last_name = ?, phone_number = ?, address = ?, bio = ? WHERE username = ?";
+        String sql = "UPDATE users SET first_name = ?, last_name = ?, phone_number = ?, address = ?, bio = ?, avatar = ? WHERE username = ?";
         return executeUpdate(sql,
                 user.getFirstName(), user.getLastName(),
-                user.getPhoneNumber(), user.getAddress(), user.getBio(),
+                user.getPhoneNumber(), user.getAddress(), user.getBio(),user.getAvatar(),
                 user.getUsername()
         );
     }

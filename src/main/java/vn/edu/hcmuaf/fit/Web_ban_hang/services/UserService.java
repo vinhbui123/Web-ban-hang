@@ -54,6 +54,7 @@ public class UserService {
             return false;
         }
         return userDao.registerUser(user);
+
     }
 
     // Cập nhật thông tin người dùng

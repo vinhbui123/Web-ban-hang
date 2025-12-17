@@ -71,15 +71,30 @@
             <!-- Avatar -->
             <div class="avatar-section">
                 <div class="avatar-container" id="avatarPreview">
-                    <img id="avatarImage"
-                         src="${pageContext.request.contextPath}/${user.avatar != null ? user.avatar : 'images/logo.png'}"
-                         alt="Avatar"
-                         style="width: 120px; height: 120px; object-fit: cover; border-radius: 50%;">
+                    <c:choose>
+                        <%-- CASE 1: User has an avatar in Database (Base64 string) --%>
+                        <c:when test="${not empty user.avatar}">
+                            <img id="avatarImage"
+                                 src="data:image/jpeg;base64,${user.avatar}"
+                                 alt="Avatar"
+                                 style="width: 120px; height: 120px; object-fit: cover; border-radius: 50%; border: 1px solid #ddd;">
+                        </c:when>
+
+                        <%-- CASE 2: No avatar, show default logo --%>
+                        <c:otherwise>
+                            <img id="avatarImage"
+                                 src="${pageContext.request.contextPath}/images/logo.png"
+                                 alt="Avatar"
+                                 style="width: 120px; height: 120px; object-fit: cover; border-radius: 50%; border: 1px solid #ddd;">
+                        </c:otherwise>
+                    </c:choose>
                 </div>
+
                 <p>File tối đa 1 MB (.JPEG, .PNG)</p>
+
                 <div class="btn-click">
                     <label class="avatar-upload-label" for="avatarUpload">Chọn ảnh</label>
-                    <input type="file" id="avatarUpload" name="avatarUpload" class="avatar-upload" accept="image/*">
+                    <input type="file" id="avatarUpload" name="avatarUpload" class="avatar-upload" accept="image/*" onchange="previewImage(this)">
                 </div>
             </div>
         </div>
@@ -126,4 +141,19 @@
 <%@include file="footer.jsp" %>
 
 </body>
+<script>
+    function previewImage(input) {
+        var preview = document.getElementById('avatarImage');
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                // Set the src of the image to the file user just picked
+                preview.src = e.target.result;
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
 </html>
