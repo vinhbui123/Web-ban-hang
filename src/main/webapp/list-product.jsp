@@ -1,6 +1,6 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
-        <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+        <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
             <html>
 
             <head>
@@ -18,8 +18,6 @@
                 <script src="${pageContext.request.contextPath}/js/cart.js" defer></script>
                 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/top-product.css">
                 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/comment.css">
-
-
             </head>
 
             <body data-context-path="${pageContext.request.contextPath}">
@@ -53,8 +51,6 @@
                                     <input type="number" name="maxPrice" value="${param.maxPrice}"
                                         placeholder="VD: 50000" min="0" step="1000" />
                                 </div>
-
-
 
                                 <div class="filter-buttons">
                                     <button type="submit" class="btn-filter">
@@ -127,9 +123,7 @@
                             <div class="pagination"></div>
                         </div>
                     </div>
-
                     <%@include file="footer.jsp" %>
-
             </body>
 
             </html>

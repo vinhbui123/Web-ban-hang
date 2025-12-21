@@ -5,7 +5,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import vn.edu.hcmuaf.fit.Web_ban_hang.model.Role;
 import vn.edu.hcmuaf.fit.Web_ban_hang.model.User;
 import vn.edu.hcmuaf.fit.Web_ban_hang.services.UserService;
 
@@ -128,10 +127,8 @@ public class RegisterController extends HttpServlet {
         user.setEmail(email);
         user.setPhoneNumber(phoneNumber);
         user.setAddress(address);
-        Role role = new Role();
-        role.setId(0); // Role "User" mặc định là 0
-        user.setRole(role);
-        user.setStatus(1); //
+        user.setRole(0);// Role "User" mặc định là 0
+        user.setStatus(1);
         user.setBio(bio);
         // kiểm tra trùng lặp username hoặc email
         boolean success = userService.registerUser(user);

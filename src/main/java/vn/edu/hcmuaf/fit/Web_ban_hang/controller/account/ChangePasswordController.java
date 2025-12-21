@@ -1,4 +1,4 @@
-package vn.edu.hcmuaf.fit.Web_ban_hang.controller;
+package vn.edu.hcmuaf.fit.Web_ban_hang.controller.account;
 
 
 import jakarta.servlet.ServletException;
@@ -42,26 +42,12 @@ public class ChangePasswordController extends HttpServlet {
             return;
         }
 
-        // Kiểm tra mật khẩu cũ
-        if (!userService.checkPassword(user.getUsername(), currentPassword)) {
-            request.setAttribute("error", "Mật khẩu cũ không chính xác!");
-            request.getRequestDispatcher("change-password.jsp").forward(request, response);
-            return;
-        }
-
         // Kiểm tra mật khẩu mới xác nhận
         if (!newPassword.equals(confirmPassword)) {
             request.setAttribute("error", "Mật khẩu xác nhận không khớp!");
             request.getRequestDispatcher("change-password.jsp").forward(request, response);
             return;
         }
-
-//        // Kiểm tra độ mạnh của mật khẩu mới
-//        if (!isStrongPassword(newPassword)) {
-//            request.setAttribute("error", "Mật khẩu mới phải có ít nhất 8 ký tự, gồm chữ hoa, chữ thường và ký tự đặc biệt như @, #, !");
-//            request.getRequestDispatcher("change-password.jsp").forward(request, response);
-//            return;
-//        }
 
         // Cập nhật mật khẩu
         boolean isUpdated = userService.updatePassword(user.getUsername(), newPassword);

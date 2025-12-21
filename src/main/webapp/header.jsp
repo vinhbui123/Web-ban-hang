@@ -77,7 +77,7 @@
                     </div>
                 </c:if>
                 <c:set var="user" value="${sessionScope.user}"/>
-                <c:if test="${user != null && user.role.id == 1}">
+                <c:if test="${user != null && user.role == 1}">
                     <a href="${pageContext.request.contextPath}/adminProduct" class="admin-btn">
                         <i class="fa-solid fa-user-tie"></i> Trang Quản Trị
                     </a>

@@ -1,7 +1,5 @@
 package vn.edu.hcmuaf.fit.Web_ban_hang.model;
 
-import vn.edu.hcmuaf.fit.Web_ban_hang.model.Role;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
@@ -24,46 +22,9 @@ public class User implements Serializable {
     private Date updateAt;
     private String salt;
     private String authProvider;
-    private Role role;
+    private Integer role;
 
-    public User(int id, String username, String password, String firstName, String lastName, String email, String phoneNumber, String address, String bio) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.avatar = null;
-        this.birthday = null;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-        this.role = role;
-        this.status = status;
-        this.bio = bio;
-        this.createAt = createAt;
-        this.updateAt = updateAt;
-    }
-    public User(String username, String password, String firstName, String lastName, String email, String phoneNumber, String address, String bio) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.avatar = null;
-        this.birthday = null;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-        this.role = role;
-        this.status = status;
-        this.bio = bio;
-        this.createAt = createAt;
-        this.updateAt = updateAt;
-    }
-
-    public User() {
-
-    }
+    public User() {}
 
     public int getId() {
         return id;
@@ -145,11 +106,11 @@ public class User implements Serializable {
         this.address = address;
     }
 
-    public Role getRole() {
+    public Integer getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(Integer role) {
         this.role = role;
     }
 

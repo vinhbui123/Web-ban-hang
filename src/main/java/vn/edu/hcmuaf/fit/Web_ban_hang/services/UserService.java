@@ -1,27 +1,47 @@
 package vn.edu.hcmuaf.fit.Web_ban_hang.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import vn.edu.hcmuaf.fit.Web_ban_hang.dao.UserDao;
 import vn.edu.hcmuaf.fit.Web_ban_hang.model.User;
-import vn.edu.hcmuaf.fit.Web_ban_hang.utils.HashUtil;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class UserService {
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
     private final UserDao userDao = new UserDao();
 
-    // Mã hóa mật khẩu
-    private String hashPassword(String password) {
-        return HashUtil.toSHA256(password);
+    // Xác thực đăng nhập
+    public User authenticateUser(String username, String password) {// mã hóa SHA-256
+        return userDao.authenticateUser(username, password); // truyền hash vào DAO
     }
 
-    // Kiểm tra email
-    public boolean isEmailExists(String email) {
-        return userDao.isEmailExists(email);
+    //input filter
+    public String validateInputs(String firstName, String lastName, String username, String email, String password, String confirmPassword) {
+        if (firstName == null || firstName.isEmpty()) return "Tên không được để trống.";
+        if (lastName == null || lastName.isEmpty()) return "Họ không được để trống.";
+        if (username == null || username.isEmpty()) return "Tên người dùng không được để trống.";
+        if (email == null || email.isEmpty()) return "Email không được để trống.";
+        if (!email.matches("^[\\w-]+(?:\\.[\\w-]+)*@(?:[\\w-]+\\.)+[a-zA-Z]{2,7}$")) {
+            return "Email không hợp lệ.";
+        }
+        if (password == null || password.isEmpty()) return "Mật khẩu không được để trống.";
+        if (!password.equals(confirmPassword)) return "Mật khẩu và xác nhận mật khẩu không khớp.";
+        if (isEmailExists(email)) return "Email đã được sử dụng";
+        if (isUsernameExists(username)) return "Tên đăng nhập đã tồn tại.";
+        return null;
     }
+
+    // Add this method to your UserService.java class
+    public String validateUpdateProfile(String firstName, String lastName, String phone) {
+        if (firstName == null || firstName.isEmpty()) return "Tên không được để trống.";
+        if (lastName == null || lastName.isEmpty()) return "Họ không được để trống.";
+        if (phone == null || phone.isEmpty()) return "Số điện thoại không được để trống.";
+        return null;
+    }
+
+    // Kiểm tra email có tồn tại
+    public boolean isEmailExists(String email) { return userDao.isEmailExists(email); }
 
     // Kiểm tra username
     public boolean isUsernameExists(String username) {
@@ -41,55 +61,9 @@ public class UserService {
         return userDao.updateUser(user);
     }
 
-    // Tạo token đặt lại mật khẩu
-    public Optional<String> generateResetToken(String email) {
-        if (email == null) return Optional.empty();
-
-        email = email.trim().toLowerCase();
-
-        System.out.println("Checking email: [" + email + "]");
-
-        if (!isEmailExists(email)) {
-            System.out.println("Email không tồn tại trong DB!");
-            return Optional.empty();
-        }
-
-        System.out.println("Email tồn tại. Tạo token...");
-
-        String token = UUID.randomUUID().toString();
-        Timestamp expiryTime = Timestamp.valueOf(LocalDateTime.now().plusMinutes(15));
-        boolean success = userDao.createResetToken(email, token, expiryTime);
-        return success ? Optional.of(token) : Optional.empty();
-    }
-
-
-    // Xác thực token
-    public Optional<String> validateToken(String token) {
-        return userDao.getEmailByValidToken(token);
-    }
-
-    // Đặt lại mật khẩu
-    public boolean resetPassword(String token, String newPassword) {
-        Optional<String> emailOpt = validateToken(token);
-        if (emailOpt.isPresent()) {
-            String email = emailOpt.get();
-            boolean updated = userDao.updatePasswordByEmail(email, newPassword);
-            if (updated) {
-                userDao.deleteToken(token);
-                return true;
-            }
-        }
-        return false;
-    }
-
     // Lấy danh sách tất cả người dùng
     public List<User> getAllUsers() {
         return userDao.getAllUsers();
-    }
-
-    // Kiểm tra mật khẩu hiện tại
-    public boolean checkPassword(String username, String currentPassword) {
-        return userDao.checkPassword(username, currentPassword);
     }
 
     // Cập nhật mật khẩu
@@ -97,18 +71,12 @@ public class UserService {
         return userDao.updatePassword(username, newPassword);
     }
 
-    // Xác thực đăng nhập
-    public User authenticateUser(String username, String password) {
-        String hashed = hashPassword(password); // Mã hóa SHA-256
-        return userDao.authenticateUser(username, hashed); // truyền hash vào DAO
-    }
-
     // Cập nhật role và status người dùng
     public boolean updateUserRoleAndStatus(int userId, int newRole, int newStatus) {
         return userDao.updateUserRoleAndStatus(userId, newRole, newStatus);
     }
 
-    public User getById(int id){
+    public User getById(int id) {
         return new UserDao().getById(id);
     }
 

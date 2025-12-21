@@ -22,6 +22,10 @@ public class ListProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
         // Get all categories for filter dropdown
         List<Category> categories = categoryService.getAll();
         request.setAttribute("categories", categories);

@@ -76,8 +76,7 @@ public class CheckoutController extends HttpServlet {
                 System.out.println("Exporting productId=" + detail.getProductId() + ", quantity="
                         + detail.getQuantity() + ", userId=" + orderDTO.getUserId());
 
-                boolean success = inventoryDao.exportProduct(detail.getProductId(), detail.getQuantity(),
-                        orderDTO.getUserId(), "export");
+                boolean success = inventoryDao.exportProduct(detail.getProductId(), detail.getQuantity());
                 if (!success) {
                     out.print("{\"success\": false, \"message\": \"Trừ kho thất bại sau khi đã lưu đơn.\"}");
                     return;

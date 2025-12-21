@@ -53,57 +53,28 @@ public class InventoryDao {
         return false;
     }
 
-    public boolean exportProduct(int productId, int quantity, int userId, String transactionType) {
-        String insertTransactionSql = "INSERT INTO inventory_transactions (product_id, user_id, quantity, transaction_type) VALUES (?, ?, ?, ?)";
-        String updateInventorySql = "UPDATE inventory SET quantity = quantity - ? WHERE product_id = ? AND quantity >= ?";
+    public boolean exportProduct(int productId, int quantity) {
+        String updateInventorySql = "UPDATE inventory SET quantity_out = quantity_out + ? WHERE product_id = ? AND quantity >= ?";
 
         try (Connection conn = DBConnect.getConnection()) {
             conn.setAutoCommit(false);
-            try {
-                // 1. Ghi log giao dịch
-                try (PreparedStatement ps = conn.prepareStatement(insertTransactionSql)) {
-                    ps.setInt(1, productId);
-                    ps.setInt(2, userId);
-                    ps.setInt(3, quantity);
-                    ps.setString(4, transactionType); // "export"
-                    ps.executeUpdate();
+            // Trừ kho
+            try (PreparedStatement ps = conn.prepareStatement(updateInventorySql)) {
+                ps.setInt(1, quantity); // Cộng thêm vào quantity_out
+                ps.setInt(2, productId);
+                ps.setInt(3, quantity); // Kiểm tra tồn kho đủ không
+                int rows = ps.executeUpdate();
+                if (rows == 0) {
+                    throw new SQLException("Không đủ hàng trong kho");
                 }
-
-                // 2. Trừ kho
-                try (PreparedStatement ps = conn.prepareStatement(updateInventorySql)) {
-                    ps.setInt(1, quantity);
-                    ps.setInt(2, productId);
-                    ps.setInt(3, quantity);
-                    int rows = ps.executeUpdate();
-                    if (rows == 0) {
-                        throw new SQLException("Không đủ hàng trong kho");
-                    }
-                }
-
-                conn.commit();
-                return true;
-            } catch (SQLException e) {
-                conn.rollback();
-                e.printStackTrace();
-                return false;
             }
+            conn.commit();
+            return true;
+
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
 
-    public boolean insertTransaction(Connection conn, int productId, int userId, int quantity, String type) {
-        String sql = "INSERT INTO inventory_transactions (product_id, user_id, quantity, transaction_type) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, productId);
-            ps.setInt(2, userId);
-            ps.setInt(3, quantity);
-            ps.setString(4, type);
-            return ps.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
 }
