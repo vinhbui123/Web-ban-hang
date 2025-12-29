@@ -1,0 +1,36 @@
+# Ignore compiled Java class files
+*.class
+
+# Ignore build directories
+/target/
+/build/
+
+# Ignore WAR/JAR files
+*.war
+*.jar
+
+# IntelliJ IDEA project files
+.idea/
+*.iml
+shelf/
+workspace.xml
+
+# VS Code settings (nếu có sử dụng)
+.vscode/
+
+# Logs
+*.log
+
+# HTTP request files (for IntelliJ HTTP Client)
+httpRequests/
+
+# Database tool configs (e.g., DataGrip, IntelliJ)
+dataSources/
+dataSources.local.xml
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+src/main/resources/db.properties
+src/main/resources/image.properties

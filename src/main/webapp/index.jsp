@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<%-- Includes the body of content --%>
+<%-- Main content --%>
 <%@include file="layoutHome.jsp" %>
 
 </body>

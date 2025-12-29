@@ -23,7 +23,7 @@ public class ManagerUsers extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<User> users = userService.getAllUsers();
+        List<?> users = userService.getAllUsers();
         request.setAttribute("users", users);
 
         // Đảm bảo thông báo lỗi được giữ nếu có

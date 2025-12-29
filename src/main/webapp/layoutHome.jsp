@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/product.css">
 
     <script src="${pageContext.request.contextPath}/js/product.js"></script>
+    <script src="${pageContext.request.contextPath}/js/cart.js"></script>
 </head>
 <body>
 

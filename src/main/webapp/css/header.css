@@ -1,0 +1,209 @@
+@charset "UTF-8";
+
+
+/* ================= HEADER STYLES ================= */
+.container-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    width: 100%;
+    min-height: 80px;
+    position: relative;
+    overflow: hidden;
+    background-color: #ffffff;
+    border-bottom: 1px solid #dddddd;
+}
+
+.header-logo img {
+    width: 80px;
+    height: 70px;
+    object-fit: contain;
+    margin-left: 30px;
+}
+
+.header-action {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.header-search {
+    display: flex;
+    align-items: center;
+    background-color: #f5f5f5;
+    height: 40px;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+#searchForm input {
+    border: none;
+    background: none;
+    width: 400px;
+    padding: 5px;
+}
+
+#searchForm button {
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #8B7D6B;
+}
+
+.header-account {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 30px;
+}
+
+.account-icon i {
+    font-size: 30px;
+    color: #333;
+}
+
+.account-info {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.account-info a {
+    text-decoration: none;
+}
+
+.account-text, .account-menu {
+    font-size: 14px;
+    color: #333;
+}
+
+.header-cart {
+    display: flex;
+    position: relative;
+    align-items: center;
+}
+
+.header-cart i {
+    font-size: 30px;
+    color: #333;
+}
+
+.cart-text {
+    font-size: 14px;
+    color: #333;
+    margin-left: 30px;
+}
+
+.cart-count {
+    position: absolute;
+    top: -5px;
+    left: 25px;
+    background-color: #e74c3c;
+    color: #ffffff;
+    border-radius: 50%;
+    padding: 2px 5px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.search-box button,
+.header-account,
+.header-cart {
+    cursor: pointer;
+}
+
+.header-cart a {
+    text-decoration: none;
+}
+
+.admin-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    color: #333;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    margin-left: 20px;
+    height: 40px;
+}
+
+.admin-btn i {
+    font-size: 30px;
+}
+
+.header-purchase {
+    display: flex;
+    align-items: center;
+    margin: 0 12px;
+    cursor: pointer;
+    color: #000;
+    transition: color 0.3s ease;
+    flex-direction: row;
+}
+
+.header-purchase i {
+    font-size: 24px;
+    margin-right: 20px;
+}
+
+.header-purchase .cart-text {
+    margin-left: 0;
+}
+
+/* Ghi đè lại font size icon trong trường hợp cần thiết */
+.header-cart i, .header-purchase i {
+    font-size: 24px;
+}
+
+/* ================= MENU STYLES ================= */
+.container-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    position: relative;
+    background-color: #050403;
+    border-bottom: 1px solid #ddd;
+}
+
+.menu {
+    display: flex;
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.menu li {
+    position: relative;
+}
+
+.menu li > a {
+    position: relative;
+    display: block;
+    padding: 20px 50px;
+    font-size: 20px;
+    color: #ccc;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.menu li > a:hover {
+    display: block;
+    color: #FFFFFF;
+}
+

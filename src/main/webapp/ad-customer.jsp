@@ -63,7 +63,7 @@
                 <td><%= user.getEmail() %>
                 </td>
                 <%
-                    int roleId = user.getRole().getId();
+                    int roleId = user.getRole();
                     String roleName = "Không xác định";
 
                     switch (roleId) {
@@ -97,7 +97,7 @@
                 </td>
                 <td>
                     <i class="fa-solid fa-pen-to-square btn-edit"
-                       onclick="openCustomerModal('<%= user.getId() %>', '<%= user.getRole().getId() %>', '<%= user.getStatus() %>')">
+                       onclick="openCustomerModal('<%= user.getId() %>', '<%= user.getRole() %>', '<%= user.getStatus() %>')">
                     </i>
                 </td>
             </tr>

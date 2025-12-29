@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css">
 <footer>
     <div class="container-footer">
         <div class="footer-content">
@@ -49,5 +50,3 @@
         </div>
     </div>
 </footer>
-
-<%-- REMOVED: <html>, <head>, <body> tags --%>

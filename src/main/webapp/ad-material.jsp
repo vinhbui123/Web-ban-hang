@@ -15,7 +15,7 @@
     </header>
 
     <section class="material-management">
-        <c:if test="${sessionScope.user.role.canAdd}">
+        <c:if test="${sessionScope.user.role == 1}">
             <button class="btn-add" onclick="openMaterialModal()">
                 <i class="fa-solid fa-plus"></i> Thêm Chất Liệu
             </button>
@@ -35,12 +35,12 @@
                     <td>${material.id}</td>
                     <td>${material.name}</td>
                     <td>
-                        <c:if test="${sessionScope.user.role.canEdit}">
+                        <c:if test="${sessionScope.user.role == 1}">
                             <button class="btn-edit" onclick="openEditMaterialModal('${material.id}', '${material.name}')">
                                 <i class="fa-solid fa-pen"></i>
                             </button>
                         </c:if>
-                        <c:if test="${sessionScope.user.role.canDelete}">
+                        <c:if test="${sessionScope.user.role == 1}">
                             <form action="${pageContext.request.contextPath}/adminMaterials" method="post" style="display:inline;">
                                 <input type="hidden" name="action" value="delete">
                                 <input type="hidden" name="id" value="${material.id}">

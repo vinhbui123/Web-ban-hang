@@ -12,7 +12,7 @@ import vn.edu.hcmuaf.fit.Web_ban_hang.services.CategoryService;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "AdminCategory", value = "/adminCategory")
+@WebServlet(name = "AdminCategorys", value = "/adminCategorys")
 public class AddCategory extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

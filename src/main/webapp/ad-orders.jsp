@@ -127,7 +127,7 @@
                         </c:choose>
                     </td>
                     <td>
-                        <c:if test="${firstRow.status == 0 && sessionScope.user.role.canOrder}">
+                        <c:if test="${firstRow.status == 0 && sessionScope.user.role == 1}">
                             <!-- Nút xác nhận -->
                             <form action="${pageContext.request.contextPath}/confirmOrder" method="post" style="margin-bottom: 5px;">
                                 <input type="hidden" name="orderId" value="${firstRow.order_id}">
@@ -137,7 +137,7 @@
                             </form>
                         </c:if>
 
-                        <c:if test="${(firstRow.status == 0 || firstRow.status == 1) && sessionScope.user.role.canOrder}">
+                        <c:if test="${(firstRow.status == 0 || firstRow.status == 1) && sessionScope.user.role == 1}">
                             <!-- Nút hủy -->
                             <form action="${pageContext.request.contextPath}/cancelOrder" method="post">
                                 <input type="hidden" name="orderId" value="${firstRow.order_id}">

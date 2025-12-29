@@ -6,17 +6,14 @@ public class Address implements Serializable {
 
     private Integer id;
     private Integer userId;
-
     private String fullName;
     private String phone;
     private String province;
     private String district;
     private String ward;
     private String addressDetail;
-
     private String addressType;
     private boolean isDefault;
-
 
     public Address() {
     }

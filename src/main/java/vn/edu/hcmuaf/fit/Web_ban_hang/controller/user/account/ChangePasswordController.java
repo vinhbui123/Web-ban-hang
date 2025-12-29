@@ -42,29 +42,25 @@ public class ChangePasswordController extends HttpServlet {
         }
 
         // --- FILTER 1: KIỂM TRA MẬT KHẨU CŨ (Giữ lại để bảo mật) ---
-        // Nếu bạn muốn bỏ qua bước này (để test), hãy comment đoạn if bên dưới lại.
-        if (!userService.checkPassword(user.getUsername(), currentPassword)) {
+        // Nếu muốn bỏ qua bước này (để test), hãy comment đoạn if bên dưới lại.
+        if (userService.authenticateUser(user.getUsername(), currentPassword) == null) {
             request.setAttribute("error", "Mật khẩu cũ không chính xác!");
             request.getRequestDispatcher("change-password.jsp").forward(request, response);
             return;
         }
 
         // Kiểm tra mật khẩu mới xác nhận
-        if (!newPassword.equals(confirmPassword)) {
+        if (!confirmPassword.equals(newPassword)) {
             request.setAttribute("error", "Mật khẩu xác nhận không khớp!");
             request.getRequestDispatcher("change-password.jsp").forward(request, response);
             return;
         }
 
-        // --- FILTER 2: ĐỘ MẠNH MẬT KHẨU (ĐÃ COMMENT/TẮT) ---
-        // Đã tắt bộ lọc này để bạn có thể đặt mật khẩu đơn giản (ví dụ: 123)
-        /*
-        if (!isStrongPassword(newPassword)) {
-            request.setAttribute("error", "Mật khẩu mới phải có ít nhất 8 ký tự, gồm chữ hoa, chữ thường và ký tự đặc biệt như @, #, !");
+        if (currentPassword.equals(newPassword)) {
+            request.setAttribute("error","Mật khẩu phải khác mật khẩu cũ");
             request.getRequestDispatcher("change-password.jsp").forward(request, response);
             return;
         }
-        */
 
         // Cập nhật mật khẩu
         boolean isUpdated = userService.updatePassword(user.getUsername(), newPassword);
@@ -78,11 +74,4 @@ public class ChangePasswordController extends HttpServlet {
 
         request.getRequestDispatcher("change-password.jsp").forward(request, response);
     }
-
-    // ✅ Hàm kiểm tra mật khẩu mạnh (Đã tắt sử dụng ở trên)
-    /*
-    private boolean isStrongPassword(String password) {
-        return password != null && password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).{8,}$");
-    }
-    */
 }

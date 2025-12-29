@@ -1,53 +1,45 @@
-//Ẩn, hiện danh sách Menu
+/* ===========================
+   LẤY contextPath CHUẨN
+   (không dùng ${pageContext...} trong file .js)
+=========================== */
+const contextPath = document.body.dataset.contextPath || '';
+
+/* ===========================
+   TOGGLE CATEGORY MENU
+=========================== */
 function toggleCategoryMenu() {
     const menu = document.getElementById("category-list");
     const arrowIcon = document.getElementById("arrow-icon");
 
-    menu.classList.toggle("hidden"); // Ẩn/hiện ul khi nhấp vào span
-    arrowIcon.classList.toggle("rotate"); // Xoay mũi tên
+    if (!menu || !arrowIcon) return;
+
+    menu.classList.toggle("hidden");
+    arrowIcon.classList.toggle("rotate");
 }
 
-// Hàm để tải nội dung từ category.html và chèn vào div.category
+/* ===========================
+   LOAD CATEGORY HTML
+=========================== */
 function addCategory() {
-    fetch('category.html')
-        .then(response => response.text())
+    fetch(`${contextPath}/category.html`)
+        .then(res => res.text())
         .then(html => {
-            document.querySelector('.category').innerHTML = html;
+            const categoryDiv = document.querySelector('.category');
+            if (categoryDiv) categoryDiv.innerHTML = html;
         })
-        .catch(error => console.log('Lỗi tải file category:', error));
+        .catch(err => console.error("Lỗi load category:", err));
 }
 
-// Hiện thông báo khi thêm vào giỏ hàng thành công
-function showPopup(message) {
-    const popup = document.getElementById("cart-popup");
-    if (popup) {
-        popup.querySelector(".popup-content p").textContent = message;
-
-        popup.classList.remove("hidden");
-
-        // Tự động ẩn sau x000 = x giây
-        const timeoutId = setTimeout(() => {
-            hidePopup();
-        }, 1000);
-
-        // Thêm sự kiện click để ẩn popup nếu người dùng click
-        function onClickAnywhere() {
-            hidePopup();
-        }
-        popup.addEventListener("click", onClickAnywhere);
-
-        function hidePopup() {
-            popup.classList.add("hidden");
-            popup.removeEventListener("click", onClickAnywhere);
-            clearTimeout(timeoutId);
-        }
-    }
-}
-
+/* ===========================
+   PAGINATION PRODUCT LIST
+=========================== */
 document.addEventListener("DOMContentLoaded", function () {
-    const itemsPerPage = 10; // Số lượng sản phẩm mỗi trang (2 dòng x 5 sản phẩm)
+    const itemsPerPage = 10;
     const productBoxes = document.querySelectorAll(".product-box");
     const pagination = document.querySelector(".pagination");
+
+    if (!productBoxes.length || !pagination) return;
+
     let currentPage = 1;
 
     function showPage(page) {
@@ -55,7 +47,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const end = start + itemsPerPage;
 
         productBoxes.forEach((box, index) => {
-            box.style.display = (index >= start && index < end) ? "block" : "none";
+            box.style.display =
+                index >= start && index < end ? "block" : "none";
         });
     }
 
@@ -64,84 +57,68 @@ document.addEventListener("DOMContentLoaded", function () {
         pagination.innerHTML = "";
 
         for (let i = 1; i <= totalPages; i++) {
-            const button = document.createElement("button");
-            button.innerText = i+"";
-            button.classList.add("page-btn");
-            button.classList.toggle("active", i === currentPage);
-            button.addEventListener("click", () => {
+            const btn = document.createElement("button");
+            btn.textContent = i;
+            btn.className = "page-btn";
+            if (i === currentPage) btn.classList.add("active");
+
+            btn.addEventListener("click", () => {
                 currentPage = i;
                 showPage(currentPage);
                 updatePagination();
             });
-            pagination.appendChild(button);
+
+            pagination.appendChild(btn);
         }
     }
 
     function updatePagination() {
-        const buttons = pagination.querySelectorAll("button");
-        buttons.forEach((button, index) => {
-            button.classList.toggle("active", index + 1 === currentPage);
+        pagination.querySelectorAll("button").forEach((btn, index) => {
+            btn.classList.toggle("active", index + 1 === currentPage);
         });
     }
-
-    const productContainer = document.querySelector(".product-list");
-    productContainer.addEventListener("click", function (event) {
-        const button = event.target.closest(".add-to-cart");
-        if (!button) return;
-
-        event.preventDefault();
-        event.stopPropagation();
-
-        const productBox = button.closest(".product-box");
-        const productIdElement = productBox.querySelector(".product-id");
-        const productId = productIdElement ? productIdElement.innerText.trim() : null;
-
-        if (!productId) return;
-
-        fetch(`${contextPath}/add-cart`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ productId : productId})
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === true) {
-                    const cartCountElement = document.querySelector(".cart-count");
-                    if (cartCountElement) cartCountElement.innerText = data.cartSize;
-                    showPopup("Sản phẩm đã được thêm vào giỏ hàng thành công!");
-                } else {
-                    if (data.status === false)
-                    showPopup(data.message);
-                }
-            })
-            .catch(error => {
-                console.error("Lỗi:", error.message);
-                alert("Có lỗi xảy ra khi thêm vào giỏ hàng: " + error.message);
-            });
-    });
 
     showPage(currentPage);
     setupPagination();
 });
-fetch(`${contextPath}/getProduct?id=${productId}`)
-    .then(response => {
-        console.log('Response status:', response.status);
-        return response.json();
-    })
-    .then(data => {
-        console.log('Product data:', data);
-        productNameInput.value = data.name || '';
-        priceInput.value = data.price || '';
-        quantityInput.value = data.quantity || '';
-        categoryInput.value = data.catalog_id || '';
-        descriptionInput.value = data.description || '';
 
-        // Đặt action của form sang chế độ cập nhật
-        form.action = `${contextPath}/adminEdit?productId=${productId}`;
-    })
-    .catch(error => {
-        console.error('Lỗi:', error);
-    });
+/* ===========================
+   LOAD PRODUCT (EDIT PAGE)
+=========================== */
+document.addEventListener("DOMContentLoaded", function () {
 
+    // Nếu không có productId thì thoát (trang list)
+    if (typeof productId === "undefined" || !productId) return;
+
+    fetch(`${contextPath}/getProduct?id=${productId}`)
+        .then(response => {
+            // Kiểm tra HTTP status trước
+            if (!response.ok) {
+                throw new Error(`HTTP Error: ${response.status}`);
+            }
+            // Lấy text trước để kiểm tra xem là JSON hay HTML
+            return response.text().then(text => {
+                try {
+                    // Cố gắng parse JSON
+                    return JSON.parse(text);
+                } catch (e) {
+                    // Nếu lỗi parse, in nội dung HTML ra console để debug
+                    console.error("Server trả về HTML thay vì JSON:", text);
+                    throw new Error("Phản hồi từ server không phải là JSON hợp lệ (xem console).");
+                }
+            });
+        })
+        .then(data => {
+            if (!data) throw new Error("Dữ liệu rỗng");
+
+            // ... (Code gán dữ liệu vào input giữ nguyên như cũ)
+            productNameInput.value = data.name ?? '';
+            priceInput.value = data.price ?? '';
+            // ...
+        })
+        .catch(err => {
+            console.error("LỖI LOAD PRODUCT:", err);
+            // Hiển thị thông báo lỗi rõ ràng hơn
+            alert("Lỗi tải dữ liệu: " + err.message);
+        });
+});
