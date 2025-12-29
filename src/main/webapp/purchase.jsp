@@ -68,40 +68,33 @@
                                         </div>
 
 
-                                        <!-- Tổng đơn -->
-                                        <div class="order-summary">
-                                            <hr class="summary-divider" />
-                                            <!-- Nút thao tác (hiện/ẩn theo JS) -->
-                                            <div class="order-actions">
-                                                <button class="cancel hidden" onclick="cancelOrder(${order.id})">Hủy
-                                                    đơn</button>
-                                                <button class="pay hidden" onclick="payOrder(${order.id})">Thanh
-                                                    toán</button>
-                                                <button class="ratting hidden" onclick="rateOrder(${order.id})">Đánh
-                                                    giá</button>
-                                                <button class="reorder hidden" onclick="reorder(${order.id})">Mua
-                                                    lại</button>
-                                                <button class="connect hidden"
-                                                    onclick="contactSupport(${order.id})">Liên hệ</button>
-                                            </div>
-                                            <c:set var="subtotal" value="0" />
-                                            <c:forEach var="item" items="${order.purchaseItems}">
-                                                <c:set var="subtotal" value="${subtotal + item.total}" />
-                                            </c:forEach>
+                <!-- Tổng đơn -->
+                <div class="order-summary">
+                    <hr class="summary-divider"/>
+                    <!-- Nút thao tác (hiện/ẩn theo JS) -->
+                    <div class="order-actions">
+                        <button class="cancel hidden" onclick="cancelOrder(${order.id})">Hủy đơn</button>
+                        <button class="pay hidden" onclick="payOrder(${order.id})">Thanh toán</button>
+                        <button class="ratting hidden" onclick="rateOrder(${order.id})">Đánh giá</button>
+                        <button class="reorder hidden" onclick="reorder(${order.id})">Mua lại</button>
+                        <button class="connect hidden" onclick="contactSupport(${order.id})">Liên hệ</button>
+                    </div>
+                    <c:set var="subtotal" value="0"/>
+                    <c:forEach var="item" items="${order.purchaseItems}">
+                        <c:set var="subtotal" value="${subtotal + item.total}"/>
+                    </c:forEach>
 
-                                            <p>Phí vận chuyển: ${order.freeShipping} VND</p>
-                                            <p><strong>Tổng cộng: <span class="price">${subtotal + order.freeShipping}
-                                                        VND</span></strong>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </c:forEach>
-                            </div>
-                        </div>
+                    <p>Phí vận chuyển: ${order.freeShipping} VND</p>
+                    <p><strong>Tổng cộng: <span class="price">${subtotal + order.freeShipping}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           VND</span></strong>
+                    </p>
+                </div>
+            </div>
+        </c:forEach>
+    </div>
+</div>
 
-                        <%@include file="footer.jsp" %>
-                            <script src="${pageContext.request.contextPath}/js/purchase.js"></script>
+<%@include file="footer.jsp" %>
+<script src="${pageContext.request.contextPath}/js/purchase.js"></script>
 
-                </body>
-
-                </html>
+</body>
+</html>

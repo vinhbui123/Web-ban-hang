@@ -20,14 +20,14 @@ public class CommentDao {
         String query = "SELECT c.*, u.username " +
                 "FROM comments c " +
                 "JOIN ( " +
-                "    SELECT user_id, MAX(create_at) AS latest_time " + // FIXED: create_at
+                "    SELECT user_id, MAX(create_at) AS latest_time " +
                 "    FROM comments " +
                 "    WHERE product_id = ? " +
                 "    GROUP BY user_id " +
-                ") latest ON c.user_id = latest.user_id AND c.create_at = latest.latest_time " + // FIXED: create_at
+                ") latest ON c.user_id = latest.user_id AND c.create_at = latest.latest_time " +
                 "LEFT JOIN users u ON c.user_id = u.id " +
                 "WHERE c.product_id = ? " +
-                "ORDER BY c.create_at DESC"; // FIXED: create_at
+                "ORDER BY c.create_at DESC";
 
         try (Connection conn = DBConnect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -40,20 +40,14 @@ public class CommentDao {
                 cmt.setProductId(rs.getInt("product_id"));
                 cmt.setUserId(rs.getInt("user_id"));
 
-                // FIX: Database column is 'comment', model likely expects 'content'
                 cmt.setContent(rs.getString("comment"));
 
                 cmt.setRating(rs.getInt("rating"));
 
-                // FIX: Database column is 'create_at'
                 cmt.setCreatedAt(rs.getTimestamp("create_at"));
 
                 String username = rs.getString("username");
-                if (username != null && !username.isEmpty()) {
-                    cmt.setUserName(username);
-                } else {
-                    cmt.setUserName("Ẩn danh");
-                }
+                cmt.setUserName(username);
 
                 comments.add(cmt);
             }

@@ -21,8 +21,7 @@ public class User implements Serializable {
     private Date createAt;
     private Date updateAt;
     private String salt;
-    private String authProvider;
-    private Integer role;
+    private int role;
 
     public User() {}
 

@@ -116,10 +116,7 @@ main {
 }
 
 /* Đảm bảo các thông tin giá trị rõ ràng */
-.price-info,
-.quantity-info,
-.total-info,
-.category-info {
+.price-info, .quantity-info, .total-info, .category-info {
     text-align: center;
     font-size: 1rem;
     color: #333;

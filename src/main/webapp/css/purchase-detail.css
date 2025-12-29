@@ -1,6 +1,5 @@
 .modal {
-    display: none;
-    /* Ẩn mặc định */
+    display: none; /* Ẩn mặc định */
     position: fixed;
     z-index: 999;
     left: 0;

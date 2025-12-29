@@ -33,8 +33,7 @@
 }
 
 .tab.active {
-    background-color: #FF5722;
-    /* Blue background when active */
+    background-color: #FF5722; /* Blue background when active */
     color: white;
     font-weight: bold;
     /*border-color: ;*/
@@ -77,8 +76,7 @@
     gap: 8px;
     justify-content: flex-end;
     margin-top: 10px;
-    flex-wrap: wrap;
-    /* Nếu nhiều nút sẽ xuống dòng đẹp */
+    flex-wrap: wrap; /* Nếu nhiều nút sẽ xuống dòng đẹp */
 }
 
 .order-actions button {

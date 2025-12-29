@@ -1,0 +1,40 @@
+.product-list {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.product-box {
+    width: 18%;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    text-align: center;
+    position: relative;
+}
+
+.product-box img {
+    width: 100%;
+    height: auto;
+}
+
+.add-cart {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.view-all {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.xem-tat-ca {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.xem-tat-ca:hover {
+    text-decoration: underline;
+}

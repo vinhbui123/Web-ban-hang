@@ -1,0 +1,594 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+
+    font-family: Tahoma, sans-serif;
+    color: #333;
+}
+
+/*Thiết lập các bảng*/
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+
+th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+    font-size: 15px;
+}
+
+th {
+    background-color: #050403;
+    color: #cccccc;
+}
+
+td {
+    background-color: #ffffff;
+    transition: background-color 0.3s ease;
+}
+
+tr:hover td {
+    background-color: #f1f1f1;
+}
+
+td.status-delivered {
+    color: green;
+    background-color: #e6ffed;
+}
+
+td.status-shipping {
+    color: orange;
+    background-color: #fff6e6;
+}
+
+td.status-cancelled {
+    color: red;
+    background-color: #ffe6e6;
+}
+
+/*Side bar*/
+.sidebar {
+    width: 200px;
+    background: #050403;
+    padding: 20px;
+    min-height: 100vh;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    float: left;
+}
+
+.sidebar h2 {
+    color: #cccccc;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.sidebar ul {
+    list-style-type: none;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li a {
+    color: #cccccc;
+    text-decoration: none;
+    display: block;
+    padding: 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.sidebar ul li a:hover {
+    background-color: #505050;
+    transform: translateX(10px);
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #ffffff;
+    overflow: auto;
+    margin-left: 200px;
+}
+.layout-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+header {
+    background: linear-gradient(135deg, #050403, #1c1b1a);
+    display: inline-block;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 0 auto;
+}
+
+header h1 {
+    font-weight: 500;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg, #1e90ff, #ff6347);
+    -webkit-background-clip: text;
+    color: transparent;
+    padding: 5px 0;
+    position: relative;
+    z-index: 1;
+    transition: all 0.4s ease;
+}
+
+section {
+    margin-top: 20px;
+}
+
+h2 {
+    margin-bottom: 10px;
+    color: #34495e;
+    font-weight: 600;
+}
+
+p {
+    line-height: 1.6;
+}
+/*Thống kê*/
+.stats {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.stat-item {
+    background-color: red;
+    color: white;
+    padding: 20px;
+    flex: 1;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.stat-item:hover {
+    transform: translateY(-5px);
+}
+
+.stat-item h3 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.stat-item p {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+/*biểu đồ*/
+section.charts {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 800px;
+    text-align: center;
+}
+.chart {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    background-color: #fff;
+    padding: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.chart canvas {
+    width: 100% !important;
+    height: 200px !important;
+    border-radius: 10px;
+}
+
+/*các button*/
+.btn-save, .btn-add, .btn-edit, .btn-delete ,.btn-import,.btn-export{
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    color:#f5f5f5;
+}
+
+.btn-save {
+    background-color: #050403;
+    color: #cccccc;
+}
+
+.btn-save:hover {
+    transform: scale(1.05);
+}
+
+.btn-add {
+    background-color: #295f2d;
+}
+
+.btn-edit {
+    background-color:#6495ED;
+}
+
+.btn-delete {
+    background-color:#FF0000;
+}
+.btn-disabled {
+    color: #999;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.btn-import {
+    background-color: #17a2b8;
+    color: #fff;
+}
+
+.btn-export {
+    background-color: #ffc107;
+    color: #212529;
+}
+.btn-cancel {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-cancel:hover {
+    background-color: #e60000;
+}
+.btn-confirm {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+.btn-confirm:hover {
+    background-color: #218838;
+}
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: auto;
+    padding: 20px;
+    width: 60%;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-in-out;
+}
+.material-checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    max-height: 150px;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.close {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+    color: #aaa;
+}
+
+.close:hover {
+    color: #000;
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #2c3e50;
+}
+
+.modal-content form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.modal-content form input[type="text"],
+.modal-content form input[type="number"],
+.modal-content form input[type="email"],
+.modal-content form select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+.inventory-form {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background-color: #f4f4f4;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    min-width: 240px;
+    margin-top:30px;
+}
+
+.inventory-form input {
+    padding: 6px 10px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+}
+
+.inventory-form button.btn-save {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.inventory-form button.btn-save:hover {
+    background-color: #218838;
+}
+
+
+
+/*Phần cài đặt */
+.setting-section {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.setting-section h2 {
+    color: #34495e;
+    margin-bottom: 12px;
+    font-size: 18px;
+    text-align: center;
+}
+
+.setting-section form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.setting-section form label {
+    display: block;
+    font-weight: bold;
+    color: #2c3e50;
+    font-size: 14px;
+    width: 45%;
+}
+
+.setting-section form input[type="text"],
+.setting-section form input[type="email"],
+.setting-section form input[type="password"],
+.setting-section form input[type="number"],
+.setting-section form select {
+    width: 45%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+.setting-section form input[type="text"]:focus,
+.setting-section form input[type="email"]:focus,
+.setting-section form input[type="password"]:focus,
+.setting-section form input[type="number"]:focus,
+.setting-section form select:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+
+.category-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+}
+
+.category-container h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.category-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 15px;
+}
+
+.category-list li {
+    display: inline-block;
+}
+
+.category-list a {
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    background-color: #f8f8f8;
+    color: #333;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+
+
+.category-list a.active {
+    background-color: #007bff !important;
+    color: white !important;
+    font-weight: bold;
+}
+
+/* Định dạng cho các nút phân trang */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination button {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.pagination button.active {
+    background-color: #050403;
+    color: #fff;
+
+}
+
+.stat-row {
+    display: flex;
+    gap: 24px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    flex-wrap: wrap; /* ✅ Cho xuống dòng khi không đủ chỗ */
+    justify-content: flex-start;
+}
+
+.stat-card {
+    flex: 0 0 230px;
+    border-radius: 12px;
+    padding: 20px 25px;
+    color: #fff;
+    font-size: 18px;
+    min-width: 230px;
+    height: 120px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    scroll-snap-align: start;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.total-orders     { background-color: #3498db; } /* xanh dương */
+.pending-orders   { background-color: #f39c12; } /* cam */
+.confirmed-orders { background-color: #2ecc71; }/* xanh lá */
+.cancelled-orders { background-color: #e74c3c; } /* đỏ */
+.total-revenue    { background-color: #9b59b6; } /* tím */
+.done-orders {
+    background-color:  #27ae60;
+}
+.total-users {
+    background-color: #34495e;
+}
+
+.total-lock-users {
+    background-color: #7f8c8d;
+}
+
+
+
+.stat-card .title {
+    font-size: 15px;
+    opacity: 0.9;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.stat-card .value {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* Optional: scrollbar custom (Chrome) */
+.stat-row::-webkit-scrollbar {
+    height: 8px;
+}
+
+.stat-row::-webkit-scrollbar-thumb {
+    background: #aaa;
+    border-radius: 10px;
+}
+.status-pending { color: #f39c12; font-weight: bold; }     /* Đang chờ xác nhận - cam */
+.status-confirmed { color: #3498db; font-weight: bold; }   /* Đã xác nhận - xanh dương */
+.status-shipping { color: #e67e22; font-weight: bold; }    /* Đang giao hàng - cam đậm */
+.status-done { color: #27ae60; font-weight: bold; }        /* Đã hoàn thành - xanh lá */
+.status-cancelled { color: red; font-weight: bold; }       /* Đã huỷ - đỏ */
+.status-unknown { color: #7f8c8d; font-style: italic; }     /* Không rõ - xám */
+

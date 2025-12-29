@@ -25,61 +25,26 @@ public class Order implements Serializable {
     }
 
     // Getter và Setter
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public int getStatus() { return status; }
+    public void setStatus(int status) { this.status = status; }
 
-    public int getStatus() {
-        return status;
-    }
+    public int getUserId() { return userId; }
+    public void setUserId(int userId) { this.userId = userId; }
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
+    public int getFreeShipping() { return freeShipping; }
+    public void setFreeShipping(int freeShipping) { this.freeShipping = freeShipping; }
 
-    public int getUserId() {
-        return userId;
-    }
+    public int getPaymentTypeId() { return paymentTypeId; }
+    public void setPaymentTypeId(int paymentTypeId) { this.paymentTypeId = paymentTypeId; }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
+    public String getCreatedAt() { return createdAt; }
+    public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
 
-    public int getFreeShipping() {
-        return freeShipping;
-    }
-
-    public void setFreeShipping(int freeShipping) {
-        this.freeShipping = freeShipping;
-    }
-
-    public int getPaymentTypeId() {
-        return paymentTypeId;
-    }
-
-    public void setPaymentTypeId(int paymentTypeId) {
-        this.paymentTypeId = paymentTypeId;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+    public String getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(String updatedAt) { this.updatedAt = updatedAt; }
 
     @Override
     public String toString() {
@@ -95,3 +60,4 @@ public class Order implements Serializable {
     }
 
 }
+

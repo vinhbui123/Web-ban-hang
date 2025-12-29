@@ -12,11 +12,8 @@ public class CategoryService {
     public List<Category> getAll() {
         return categoryDao.getAll();
     }
-//    public Category getById(int id) {
-//        return categoryDao.getById(id);
-//    }
-//    public String getCategoryNameById(int categoryId) {
-//        Category category = categoryDao.getById(categoryId);
-//        return (category != null) ? category.getName() : "Không xác định";
-//    }
+    public String getCategoryNameById(int categoryId) {
+        Category category = categoryDao.getById(categoryId);
+        return (category != null) ? category.getName() : "Không xác định";
+    }
 }

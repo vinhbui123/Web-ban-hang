@@ -4,14 +4,12 @@
 
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HandMade</title>
 
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/index.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/product.css">
     <script src="${pageContext.request.contextPath}/js/product.js" defer></script>
@@ -30,16 +28,16 @@
         <div class="banner-show">
             <button class="prev" onclick="changeBanner(-1)">&#10094;</button>
             <div class="list-images">
-                <img src="${pageContext.request.contextPath}/images/banner-index1.png"
-                     class="slide" style="display: none;" alt="">
-                <img src="${pageContext.request.contextPath}/images/banner-index2.png"
-                     class="slide" style="display: none;" alt="">
-                <img src="${pageContext.request.contextPath}/images/banner-index3.png"
-                     class="slide" style="display: none;" alt="">
-                <img src="${pageContext.request.contextPath}/images/banner-index4.png"
-                     class="slide" style="display: none;" alt="">
-                <img src="${pageContext.request.contextPath}/images/banner-index5.png"
-                     class="slide" style="display: none;" alt="">
+                <img src="${pageContext.request.contextPath}/images/banner-index1.png" class="slide"
+                     style="display: none;" alt="">
+                <img src="${pageContext.request.contextPath}/images/banner-index2.png" class="slide"
+                     style="display: none;" alt="">
+                <img src="${pageContext.request.contextPath}/images/banner-index3.png" class="slide"
+                     style="display: none;" alt="">
+                <img src="${pageContext.request.contextPath}/images/banner-index4.png" class="slide"
+                     style="display: none;" alt="">
+                <img src="${pageContext.request.contextPath}/images/banner-index5.png" class="slide"
+                     style="display: none;" alt="">
             </div>
             <button class="next" onclick="changeBanner(1)">&#10095;</button>
         </div>

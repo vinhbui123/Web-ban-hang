@@ -244,6 +244,6 @@
     </div>
 </div>
 <%@include file="footer.jsp" %>
-<script src="${pageContext.request.contextPath}/js/product_detail.js"></script>
+<script src="${pageContext.request.contextPath}/js/product-detail.js"></script>
 </body>
 </html>

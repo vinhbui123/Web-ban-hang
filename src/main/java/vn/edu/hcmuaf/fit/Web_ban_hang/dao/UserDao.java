@@ -52,17 +52,14 @@ public class UserDao {
             ResultSetMetaData rsmd = rs.getMetaData();
             int columns = rsmd.getColumnCount();
             for (int x = 1; x <= columns; x++) {
-                if (columnName.equals(rsmd.getColumnLabel(x)))
-                    return true;
+                if (columnName.equals(rsmd.getColumnLabel(x))) return true;
             }
-        } catch (SQLException e) {
-            return false;
-        }
+        } catch (SQLException e) { return false; }
         return false;
     }
 
     // 2. Tự động gán tham số vào dấu ? (Hỗ trợ Date, Timestamp, Null)
-    // sử dụng Object.. thay thế khỏi khai báo Object[] = {a,b,c}
+    //sử dụng Object.. thay thế khỏi khai báo Object[] = {a,b,c}
     private void setParameters(PreparedStatement stmt, Object... parameters) throws SQLException {
         for (int i = 0; i < parameters.length; i++) {
             Object param = parameters[i];
@@ -81,7 +78,7 @@ public class UserDao {
     // 3. Thực thi query Update/Insert/Delete (Trả về boolean)
     private boolean executeUpdate(String sql, Object... params) {
         try (Connection conn = DBConnect.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
             setParameters(stmt, params);
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -93,11 +90,10 @@ public class UserDao {
     // 4. Thực thi query lấy 1 User (SELECT * trả về Object)
     private User queryOne(String sql, Object... params) {
         try (Connection conn = DBConnect.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
             setParameters(stmt, params);
             try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next())
-                    return mapUser(rs);
+                if (rs.next()) return mapUser(rs);
             }
         } catch (SQLException e) {
             log.error("Query One Error: " + sql, e);
@@ -109,11 +105,10 @@ public class UserDao {
     private List<User> queryList(String sql, Object... params) {
         List<User> users = new ArrayList<>();
         try (Connection conn = DBConnect.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
             setParameters(stmt, params);
             try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next())
-                    users.add(mapUser(rs));
+                while (rs.next()) users.add(mapUser(rs));
             }
         } catch (SQLException e) {
             log.error("Query List Error: " + sql, e);
@@ -124,7 +119,7 @@ public class UserDao {
     // 6. Thực thi query lấy giá trị đơn (COUNT, lấy string cột cụ thể...)
     private <T> T queryScalar(String sql, Class<T> type, Object... params) {
         try (Connection conn = DBConnect.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
             setParameters(stmt, params);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -157,15 +152,11 @@ public class UserDao {
         return queryOne("SELECT * FROM users WHERE username = ?", username);
     }
 
-    public User getUserByEmail(String email) {
-        return queryOne("SELECT * FROM users WHERE email = ?", email);
-    }
-
     public List<User> getAllUsers() {
         return queryList("SELECT * FROM users");
     }
 
-    // 3. Authentication
+    // 3. Xác thực
     public User authenticateUser(String username, String currentPassword) {
         // Lấy user từ DB lên trước
         User user = getUserByUsername(username);
@@ -186,7 +177,7 @@ public class UserDao {
         String sql = "INSERT INTO users (username, password, first_name, last_name, avatar, birthday, email, phone_number, address, role, status, bio, create_at, update_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         Timestamp now = Timestamp.valueOf(LocalDateTime.now());
-        // Default Role = 0 if not set
+        // set role mặc định là 0 nếu không có
         int roleId = user.getRole() != 0 ? user.getRole() : 0;
 
         return executeUpdate(sql,
@@ -203,7 +194,8 @@ public class UserDao {
                 user.getStatus(),
                 user.getBio(),
                 now,
-                now);
+                now
+        );
     }
 
     // Social Login Insert
@@ -214,16 +206,18 @@ public class UserDao {
 
         return executeUpdate(sql,
                 user.getEmail(), user.getUsername(), user.getFirstName(), user.getLastName(),
-                user.getRole(), user.getStatus(), randomPassHash, now, now);
+                user.getRole(), user.getStatus(), randomPassHash, now, now
+        );
     }
 
-    // 5. Update Methods
+    // 5. Cập nhật thông tin người dùng
     public boolean updateUser(User user) {
         String sql = "UPDATE users SET first_name = ?, last_name = ?, phone_number = ?, address = ?, bio = ?, avatar = ? WHERE username = ?";
         return executeUpdate(sql,
                 user.getFirstName(), user.getLastName(),
-                user.getPhoneNumber(), user.getAddress(), user.getBio(), user.getAvatar(),
-                user.getUsername());
+                user.getPhoneNumber(), user.getAddress(), user.getBio(),user.getAvatar(),
+                user.getUsername()
+        );
     }
 
     public boolean updatePassword(String username, String newPassword) {

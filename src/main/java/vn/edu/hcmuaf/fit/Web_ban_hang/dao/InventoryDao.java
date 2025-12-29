@@ -76,5 +76,39 @@ public class InventoryDao {
             return false;
         }
     }
+    public boolean importProduct(int productId, int quantity) {
+        Connection conn = null;
+        try {
+            conn = DBConnect.getConnection();
+            conn.setAutoCommit(false); // bật transaction
 
+            boolean updateOk = updateInventory(conn, productId, quantity, 0);
+
+            System.out.println("updateInventory: " + updateOk);
+
+            if (!updateOk) {
+                System.out.println("Một trong hai thao tác thất bại!");
+                conn.rollback();
+                return false;
+            }
+
+            conn.commit();
+            return true;
+        } catch (SQLException e) {
+            if (conn != null) try {
+                conn.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            if (conn != null) try {
+                conn.setAutoCommit(true);
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
 }

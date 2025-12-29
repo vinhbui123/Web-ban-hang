@@ -1,4 +1,3 @@
-// Cart.js - Version 2.0 - Updated 2025-12-29 10:00
 // Hiển thị popup thông báo
 function showCartPopup(message, isSuccess = true) {
     const popup = document.getElementById("cart-popup");
@@ -116,8 +115,6 @@ document.addEventListener("DOMContentLoaded", function () {
 function updateSelection(productId, isSelected) {
     const contextPath = document.body.dataset.contextPath || '';
 
-    console.log('[updateSelection] Called with:', { productId, isSelected });
-
     fetch(`${contextPath}/api/cart`, {
         method: "POST",
         headers: {
@@ -131,8 +128,6 @@ function updateSelection(productId, isSelected) {
     })
         .then(response => response.json())
         .then(data => {
-            console.log('[updateSelection] Response:', data);
-
             if (data.status === true) {
                 // Update total display (Price)
                 const totalPriceDisplay = document.getElementById("cart-total-price");

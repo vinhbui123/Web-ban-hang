@@ -1,8 +1,9 @@
+
 .filter-box {
     background: #ffffff;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     margin: 20px 0;
 }
 
@@ -40,11 +41,23 @@
     box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
 }
 
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+}
+
 .filter-buttons {
     display: flex;
     gap: 10px;
     margin-left: auto;
-    align-items: flex-end;
 }
 
 .btn-filter,
@@ -61,13 +74,13 @@
 }
 
 .btn-filter {
-    background: black;
-    color: white;
+    background: black ;
+    color: white ;
     border: none;
 }
 
 .btn-filter:hover {
-    background: #333;
+    background: #333 ;
 }
 
 .btn-reset {
@@ -99,4 +112,53 @@
         flex: 1;
         justify-content: center;
     }
+}
+.top-view-box {
+    position: absolute;
+    right: 30px;
+    top: 100px;
+    width: 250px;
+    background: #fff9f4;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 15px;
+    z-index: 10;
+}
+
+.top-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #ff5e00;
+}
+
+.top-product {
+    display: flex;
+    margin-bottom: 12px;
+}
+
+.top-img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-right: 10px;
+}
+
+.top-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.top-name {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.top-view {
+    font-size: 13px;
+    color: #888;
 }
