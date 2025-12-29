@@ -146,8 +146,9 @@
                                             <label for="select-all">Chọn tất cả</label>
                                         </div>
                                         <div class="product-total">
-                                            Tổng số lượng: <span>${sessionScope.cart.totalQuantityAll}</span>
-                                            | Tổng tiền: <span>
+                                            Tổng số lượng: <span
+                                                id="cart-total-quantity">${sessionScope.cart.selectedQuantity}</span>
+                                            | Tổng tiền: <span id="cart-total-price">
                                                 <f:formatNumber value="${sessionScope.cart.selectedTotalWithDiscount}"
                                                     pattern="#,##0đ" />
                                             </span>
@@ -162,7 +163,8 @@
                     </div>
                     <%@include file="footer.jsp" %>
 
-                        <script src="${pageContext.request.contextPath}/js/cart.js"></script>
+                        <script
+                            src="${pageContext.request.contextPath}/js/cart.js?v=<%= System.currentTimeMillis() %>"></script>
             </body>
 
             </html>

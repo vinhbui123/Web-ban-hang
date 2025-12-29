@@ -56,7 +56,6 @@
                                 <!-- Tiêu đề cột -->
                                 <div class="menu-info">
                                     <div class="product-info-header">Sản phẩm</div>
-                                    <div class="category-info-header">Phân loại</div>
                                     <div class="price-info-header">Đơn giá</div>
                                     <div class="quantity-info-header">Số lượng</div>
                                     <div class="total-info-header">Thành tiền</div>
@@ -72,9 +71,6 @@
                                                 <div class="product-details">
                                                     <p class="product-name">${product.name}</p>
                                                 </div>
-                                            </div>
-                                            <div class="category-info">
-                                                <p class="product-variant"></p>
                                             </div>
                                             <div class="price-info">
                                                 <c:out value="${product.price}" /> VND
@@ -93,31 +89,14 @@
                                         <div class="message-box">
                                             <label for="message"><strong>Lời nhắn:</strong></label><br>
                                             <textarea id="message" placeholder="Lưu ý cho Người bán..." rows="5"
-                                                required></textarea>
-                                        </div>
-
-                                        <!-- Phương thức vận chuyển -->
-                                        <div class="shipping-info">
-                                            <strong>Phương thức vận chuyển:</strong>
-                                            <c:choose>
-                                                <c:when test="${empty sessionScope.addressDefault}">
-                                                    <div style="color: red;">
-                                                        <span>Vui lòng cập nhật địa chỉ đơn hàng</span>
-                                                    </div>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <div id="shipping-methods">
-                                                        <div class="loading"></div>
-                                                    </div>
-                                                </c:otherwise>
-                                            </c:choose>
+                                                required style="width:100%; min-height: 70px;"></textarea>
                                         </div>
                                     </div>
                                 </div>
                             </section>
                             <section class="payment-methods">
                                 <h2>Phương thức thanh toán</h2>
-                                <div class="payment-tabs">
+                                <div class="payment-tabs" style="padding-top: 15px;">
                                     <button class="tab active" onclick="showPayment('cod')">Thanh toán khi nhận
                                         hàng</button>
                                     <button class="tab" onclick="showPayment('qr')">QR chuyển khoản</button>

@@ -168,16 +168,15 @@ public class OrderDao {
                 }
             }
 
-            // Bước 3: Hoàn lại kho và ghi log hủy từng sản phẩm
+            // Bước 3: Hoàn lại kho
             InventoryDao inventoryDao = new InventoryDao();
             for (Map.Entry<Integer, Integer> entry : productMap.entrySet()) {
                 int productId = entry.getKey();
                 int quantity = entry.getValue();
 
                 boolean stockOk = inventoryDao.updateInventory(conn, productId, quantity, 0);
-                boolean transOk = inventoryDao.insertTransaction(conn, productId, userId, quantity, "cancel");
 
-                if (!stockOk || !transOk) {
+                if (!stockOk) {
                     conn.rollback();
                     return false;
                 }

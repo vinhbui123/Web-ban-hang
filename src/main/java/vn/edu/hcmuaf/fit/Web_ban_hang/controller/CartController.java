@@ -159,6 +159,7 @@ public class CartController extends HttpServlet {
             }
 
             result.put("cartSize", cart.getTotalQuantityAll());
+            result.put("selectedQuantity", cart.getSelectedQuantity());
             result.put("total", cart.getSelectedTotalWithDiscount());
 
             out.print(gson.toJson(result));

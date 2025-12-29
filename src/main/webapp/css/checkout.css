@@ -63,7 +63,7 @@ main {
 .menu-info,
 .product-item {
     display: grid;
-    grid-template-columns: 3fr 2fr 1fr 1fr 1fr;
+    grid-template-columns: 3fr 2fr 1fr 1fr;
     gap: 12px;
     align-items: center;
     padding: 15px 0;
@@ -230,7 +230,7 @@ main {
 }
 
 .message-box {
-    width: 35%;
+    width: 100%;
 }
 
 .message-box input {

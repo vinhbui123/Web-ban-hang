@@ -1,5 +1,4 @@
-const contextPath = "${pageContext.request.contextPath}";
-//Ẩn, hiện danh sách Menu
+// Ẩn, hiện danh sách Menu
 function toggleCategoryMenu() {
     const menu = document.getElementById("category-list");
     const arrowIcon = document.getElementById("arrow-icon");
@@ -66,23 +65,3 @@ document.addEventListener("DOMContentLoaded", function () {
     showPage(currentPage);
     setupPagination();
 });
-fetch(`${contextPath}/getProduct?id=${productId}`)
-    .then(response => {
-        console.log('Response status:', response.status);
-        return response.json();
-    })
-    .then(data => {
-        // console.log('Product data:', data);
-        productNameInput.value = data.name || '';
-        priceInput.value = data.price || '';
-        quantityInput.value = data.quantity || '';
-        categoryInput.value = data.catalog_id || '';
-        descriptionInput.value = data.description || '';
-
-        // Đặt action của form sang chế độ cập nhật
-        form.action = `${contextPath}/adminEdit?productId=${productId}`;
-    })
-    .catch(error => {
-        console.error('Lỗi:', error);
-    });
-
