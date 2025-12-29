@@ -10,6 +10,7 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class UserDao {
@@ -18,7 +19,8 @@ public class UserDao {
     private static UserDao instance;
 
     public static UserDao getInstance() {
-        if (instance == null) instance = new UserDao();
+        if (instance == null)
+            instance = new UserDao();
         return instance;
     }
 

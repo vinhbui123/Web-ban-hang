@@ -1,8 +1,9 @@
 package vn.edu.hcmuaf.fit.Web_ban_hang.model;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class Comment {
+public class Comment implements Serializable {
     private int id;
     private int productId;
     private int userId;

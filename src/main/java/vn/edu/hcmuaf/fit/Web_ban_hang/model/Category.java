@@ -1,6 +1,8 @@
 package vn.edu.hcmuaf.fit.Web_ban_hang.model;
 
-public class Category {
+import java.io.Serializable;
+
+public class Category implements Serializable {
     private int id;
     private String name;
 
@@ -10,7 +12,6 @@ public class Category {
     }
     public Category() {
     }
-
 
     public String getName() {
         return name;

@@ -54,7 +54,7 @@ function cancelOrder(orderId) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({orderId: orderId}) // ← gửi dạng JSON rõ ràng
+            body: JSON.stringify({ orderId: orderId }) // ← gửi dạng JSON rõ ràng
         })
             .then(res => res.json())
             .then(data => {

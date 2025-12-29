@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-
 public class Product implements Serializable {
     private int id;
     private int catalog_id;
@@ -21,25 +20,6 @@ public class Product implements Serializable {
     private List<Material> materials;
     private int quantity;
     private int stock;
-
-    // Constructor
-
-    public Product(int id, int catalog_id, String name, String img, int price, int discount,int quantity, int view, String description, Date created_at, Date updated_at, List<String> subImg, List<Color> colors, List<Material> materials) {
-        this.id = id;
-        this.catalog_id = catalog_id;
-        this.name = name;
-        this.img = img;
-        this.price = price;
-        this.discount = discount;
-        this.view = view;
-        this.description = description;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
-        this.subImg = subImg;
-        this.colors = colors;
-        this.materials = materials;
-        this.quantity = quantity;
-    }
 
     // Default constructor
     public Product() {}

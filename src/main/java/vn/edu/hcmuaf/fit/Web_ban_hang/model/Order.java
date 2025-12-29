@@ -13,7 +13,8 @@ public class Order implements Serializable {
     private String updatedAt;
 
     // Constructor
-    public Order() {}
+    public Order() {
+    }
 
     // Constuctor to get info from web to DB
     public Order(int status, int userId, int freeShipping, int paymentTypeId) {

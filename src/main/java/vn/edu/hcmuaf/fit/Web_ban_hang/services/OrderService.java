@@ -10,7 +10,7 @@ import java.util.List;
 
 public class OrderService {
 
-    private final OrderDao orderDao = new OrderDao();
+    private OrderDao orderDao = new OrderDao();
 
     // Add order to DB
     public void addOrder(Order order, List<OrderDetail> orderDetails) {
@@ -30,7 +30,7 @@ public class OrderService {
             orderDetail.setProductId(dto.getProductId());
             orderDetail.setPrice(dto.getPrice());
             orderDetail.setQuantity(dto.getQuantity());
-            orderDetail.setTotalMoney(dto.getPrice() * dto.getQuantity());  // ✅ THÊM DÒNG NÀY
+            orderDetail.setTotalMoney(dto.getPrice() * dto.getQuantity()); //THÊM DÒNG NÀY
             orderDetail.setDiscountAmount(0); // Nếu bạn chưa dùng chiết khấu
             orderDetail.setDiscountPercentage(0); // Nếu bạn chưa dùng phần trăm chiết khấu
             result.add(orderDetail);
@@ -41,7 +41,5 @@ public class OrderService {
     public boolean cancelOrder(int orderId, int userId) {
         return orderDao.cancelOrder(orderId, userId);
     }
-
-
 
 }

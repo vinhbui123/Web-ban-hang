@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css">
 <footer>
     <div class="container-footer">
@@ -9,7 +8,7 @@
 
             <ul class="address-footer">
                 <li><i class="fa-solid fa-location-dot"></i>Stown Thủ Đức, Bình Chiểu, Thủ Đức, TPHCM</li>
-                <li><i class="fa-solid fa-phone"></i>0374222861</li>
+                <li><i class="fa-solid fa-phone"></i>0343 031 030</li>
                 <li><i class="fa-solid fa-envelope"></i>handmadestudio@gmail.com</li>
             </ul>
         </div>
@@ -37,8 +36,7 @@
         <div class="footer-content">
             <h3>LIÊN HỆ</h3>
             <ul class="list-brands">
-                <li><a
-                        href="https://www.facebook.com/"><i class="fa-brands fa-facebook"></i></a></li>
+                <li><a href="https://www.facebook.com/"><i class="fa-brands fa-facebook"></i></a></li>
                 <li><a href="https://www.instagram.com/"><i class="fa-brands fa-instagram"></i></a></li>
                 <li><a href="https://www.tiktok.com/"><i class="fa-brands fa-tiktok"></i></a></li>
             </ul>
@@ -46,7 +44,7 @@
     </div>
     <div class="footer-copyright">
         <div class="text-copyright">
-            <p>Copy Right @ 2024 HAND MADE STUDIO Powered by LNH-Team</p>
+            <p>Copy Right @ 2025 HAND MADE STUDIO Powered</p>
         </div>
     </div>
 </footer>

@@ -99,6 +99,11 @@ public class CartService implements Serializable {
                 .mapToDouble(cp -> cp.getDiscountedPrice() * cp.getQuantity()).sum();
     }
 
+    public int getSelectedQuantity() {
+        return data.values().stream().filter(CartProduct::isSelected)
+                .mapToInt(CartProduct::getQuantity).sum();
+    }
+
     public boolean isEmpty() {
         return data.isEmpty();
     }

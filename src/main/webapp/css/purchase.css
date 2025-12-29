@@ -1,8 +1,3 @@
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-}
-
 .container {
     max-width: 1000px;
     min-height: 75vh;
@@ -10,7 +5,7 @@ body {
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .purchase-title {
@@ -71,6 +66,7 @@ body {
     flex-shrink: 0;
     margin-right: 15px;
 }
+
 .order-details p {
     margin: 4px 0;
 }
@@ -176,10 +172,10 @@ body {
 }
 
 .details-header {
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
- }
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
 .summary-divider {
     border: none;

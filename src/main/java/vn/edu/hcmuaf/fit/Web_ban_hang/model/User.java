@@ -1,9 +1,10 @@
 package vn.edu.hcmuaf.fit.Web_ban_hang.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 
-public class User {
+public class User implements Serializable {
     private int id;
     private String username;
     private String password;
@@ -21,11 +22,8 @@ public class User {
     private String salt;
     private int role;
 
-    public User() {
+    public User() {}
 
-    }
-
-    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -106,10 +104,11 @@ public class User {
         this.address = address;
     }
 
-    public int getRole() { return role; }
+    public Integer getRole() {
+        return role;
+    }
 
-
-    public void setRole(int role) {
+    public void setRole(Integer role) {
         this.role = role;
     }
 
@@ -152,7 +151,6 @@ public class User {
     public void setSalt(String salt) {
         this.salt = salt;
     }
-
 
     @Override
     public String toString() {

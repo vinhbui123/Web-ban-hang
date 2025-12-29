@@ -1,45 +1,28 @@
-/* ===========================
-   LẤY contextPath CHUẨN
-   (không dùng ${pageContext...} trong file .js)
-=========================== */
-const contextPath = document.body.dataset.contextPath || '';
-
-/* ===========================
-   TOGGLE CATEGORY MENU
-=========================== */
+// Ẩn, hiện danh sách Menu
 function toggleCategoryMenu() {
     const menu = document.getElementById("category-list");
     const arrowIcon = document.getElementById("arrow-icon");
 
-    if (!menu || !arrowIcon) return;
-
-    menu.classList.toggle("hidden");
-    arrowIcon.classList.toggle("rotate");
+    menu.classList.toggle("hidden"); // Ẩn/hiện ul khi nhấp vào span
+    arrowIcon.classList.toggle("rotate"); // Xoay mũi tên
 }
 
-/* ===========================
-   LOAD CATEGORY HTML
-=========================== */
+// Hàm để tải nội dung từ category.html và chèn vào div.category
 function addCategory() {
-    fetch(`${contextPath}/category.html`)
-        .then(res => res.text())
+    fetch('category.html')
+        .then(response => response.text())
         .then(html => {
-            const categoryDiv = document.querySelector('.category');
-            if (categoryDiv) categoryDiv.innerHTML = html;
+            document.querySelector('.category').innerHTML = html;
         })
-        .catch(err => console.error("Lỗi load category:", err));
+        .catch(error => console.log('Lỗi tải file category:', error));
 }
 
-/* ===========================
-   PAGINATION PRODUCT LIST
-=========================== */
+// showPopup removed (handled by cart.js showCartPopup)
+
 document.addEventListener("DOMContentLoaded", function () {
-    const itemsPerPage = 10;
+    const itemsPerPage = 10; // Số lượng sản phẩm mỗi trang (2 dòng x 5 sản phẩm)
     const productBoxes = document.querySelectorAll(".product-box");
     const pagination = document.querySelector(".pagination");
-
-    if (!productBoxes.length || !pagination) return;
-
     let currentPage = 1;
 
     function showPage(page) {
@@ -47,8 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const end = start + itemsPerPage;
 
         productBoxes.forEach((box, index) => {
-            box.style.display =
-                index >= start && index < end ? "block" : "none";
+            box.style.display = (index >= start && index < end) ? "block" : "none";
         });
     }
 
@@ -57,68 +39,29 @@ document.addEventListener("DOMContentLoaded", function () {
         pagination.innerHTML = "";
 
         for (let i = 1; i <= totalPages; i++) {
-            const btn = document.createElement("button");
-            btn.textContent = i;
-            btn.className = "page-btn";
-            if (i === currentPage) btn.classList.add("active");
-
-            btn.addEventListener("click", () => {
+            const button = document.createElement("button");
+            button.innerText = i + "";
+            button.classList.add("page-btn");
+            button.classList.toggle("active", i === currentPage);
+            button.addEventListener("click", () => {
                 currentPage = i;
                 showPage(currentPage);
                 updatePagination();
             });
-
-            pagination.appendChild(btn);
+            pagination.appendChild(button);
         }
     }
 
     function updatePagination() {
-        pagination.querySelectorAll("button").forEach((btn, index) => {
-            btn.classList.toggle("active", index + 1 === currentPage);
+        const buttons = pagination.querySelectorAll("button");
+        buttons.forEach((button, index) => {
+            button.classList.toggle("active", index + 1 === currentPage);
         });
     }
 
+    const productContainer = document.querySelector(".product-list");
+    // productContainer click listener for add-to-cart removed (handled by cart.js)
+
     showPage(currentPage);
     setupPagination();
-});
-
-/* ===========================
-   LOAD PRODUCT (EDIT PAGE)
-=========================== */
-document.addEventListener("DOMContentLoaded", function () {
-
-    // Nếu không có productId thì thoát (trang list)
-    if (typeof productId === "undefined" || !productId) return;
-
-    fetch(`${contextPath}/getProduct?id=${productId}`)
-        .then(response => {
-            // Kiểm tra HTTP status trước
-            if (!response.ok) {
-                throw new Error(`HTTP Error: ${response.status}`);
-            }
-            // Lấy text trước để kiểm tra xem là JSON hay HTML
-            return response.text().then(text => {
-                try {
-                    // Cố gắng parse JSON
-                    return JSON.parse(text);
-                } catch (e) {
-                    // Nếu lỗi parse, in nội dung HTML ra console để debug
-                    console.error("Server trả về HTML thay vì JSON:", text);
-                    throw new Error("Phản hồi từ server không phải là JSON hợp lệ (xem console).");
-                }
-            });
-        })
-        .then(data => {
-            if (!data) throw new Error("Dữ liệu rỗng");
-
-            // ... (Code gán dữ liệu vào input giữ nguyên như cũ)
-            productNameInput.value = data.name ?? '';
-            priceInput.value = data.price ?? '';
-            // ...
-        })
-        .catch(err => {
-            console.error("LỖI LOAD PRODUCT:", err);
-            // Hiển thị thông báo lỗi rõ ràng hơn
-            alert("Lỗi tải dữ liệu: " + err.message);
-        });
 });

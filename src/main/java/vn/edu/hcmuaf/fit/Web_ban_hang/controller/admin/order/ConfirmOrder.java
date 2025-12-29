@@ -15,7 +15,7 @@ public class ConfirmOrder extends HttpServlet {
         OrderDao dao = new OrderDao();
         boolean success = dao.confirmOrder(orderId);
         if (success) {
-            System.out.println("✅ Admin đã xác nhận đơn hàng #" + orderId);
+            System.out.println("Admin đã xác nhận đơn hàng #" + orderId);
         }
         response.sendRedirect(request.getContextPath() + "/adminOrders");
     }

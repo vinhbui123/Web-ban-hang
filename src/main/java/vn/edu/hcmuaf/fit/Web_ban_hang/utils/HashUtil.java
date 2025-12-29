@@ -8,7 +8,7 @@ public class HashUtil {
     public static String toSHA256(String input) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            // Sửa tại đây: chỉ định charset UTF-8 rõ ràng và xử lý ngoại lệ
+
             byte[] hash = digest.digest(input.getBytes(StandardCharsets.UTF_8));
             StringBuilder hexString = new StringBuilder();
 

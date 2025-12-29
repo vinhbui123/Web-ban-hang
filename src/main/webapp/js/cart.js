@@ -129,11 +129,31 @@ function updateSelection(productId, isSelected) {
         .then(response => response.json())
         .then(data => {
             if (data.status === true) {
-                // Update total display
-                const totalDisplay = document.querySelector(".cart-summary .product-total span:last-child");
-                if (totalDisplay) {
-                    totalDisplay.innerText = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data.total);
+                // Update total display (Price)
+                const totalPriceDisplay = document.getElementById("cart-total-price");
+                if (totalPriceDisplay) {
+                    totalPriceDisplay.innerText = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data.total);
+                    console.log('[updateSelection] Updated price to:', data.total);
                 }
+
+                // Update total quantity display
+                const totalQuantityDisplay = document.getElementById("cart-total-quantity");
+                if (totalQuantityDisplay && data.selectedQuantity !== undefined) {
+                    totalQuantityDisplay.innerText = data.selectedQuantity;
+                    console.log('[updateSelection] Updated quantity to:', data.selectedQuantity);
+                }
+
+                // Update "Select All" checkbox state based on current state of all checkboxes
+                // This runs AFTER the checkbox state has been updated
+                setTimeout(() => {
+                    const allCheckboxes = document.querySelectorAll('.product-checkbox');
+                    const selectAllCheckbox = document.getElementById('select-all');
+                    if (selectAllCheckbox && allCheckboxes.length > 0) {
+                        const allChecked = Array.from(allCheckboxes).every(cb => cb.checked);
+                        selectAllCheckbox.checked = allChecked;
+                        console.log('[updateSelection] Select all checkbox updated to:', allChecked);
+                    }
+                }, 0);
             } else {
                 showCartPopup(data.message, false);
             }
@@ -162,9 +182,15 @@ function selectAll(isSelected) {
                 // Update specific checkboxes to match 'selectAll' state
                 document.querySelectorAll('.product-checkbox').forEach(cb => cb.checked = isSelected);
 
-                const totalDisplay = document.querySelector(".cart-summary .product-total span:last-child");
-                if (totalDisplay) {
-                    totalDisplay.innerText = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data.total);
+                const totalPriceDisplay = document.getElementById("cart-total-price");
+                if (totalPriceDisplay) {
+                    totalPriceDisplay.innerText = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data.total);
+                }
+
+                // Update total quantity display
+                const totalQuantityDisplay = document.getElementById("cart-total-quantity");
+                if (totalQuantityDisplay && data.selectedQuantity !== undefined) {
+                    totalQuantityDisplay.innerText = data.selectedQuantity;
                 }
             } else {
                 showCartPopup(data.message, false);

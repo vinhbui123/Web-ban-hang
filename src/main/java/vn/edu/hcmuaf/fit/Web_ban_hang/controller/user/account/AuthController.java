@@ -57,10 +57,9 @@ public class AuthController extends HttpServlet {
             response.sendRedirect(request.getContextPath() + ("/home"));
             return;
         }
-            request.setAttribute("errorMessage", "Tài khoản hoặc mật khẩu không đúng");
-            request.setAttribute("username", username);
-            // prevent loop
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+        request.setAttribute("errorMessage", "Tài khoản hoặc mật khẩu không đúng");
+        request.setAttribute("username", username);
+        request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
     // Helper method to handle logout logic
@@ -68,10 +67,9 @@ public class AuthController extends HttpServlet {
         HttpSession session = request.getSession(false);
 
         if (session != null) {
-            session.invalidate(); // Xóa session phía client
+            session.invalidate(); // Remove session form client
         }
-
-        // Redirect to home (using context path for safety)
-        response.sendRedirect("/home");
+    // Redirect to home (using context path for safety)
+        response.sendRedirect(request.getContextPath() + "/home");
     }
 }

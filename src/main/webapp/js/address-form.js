@@ -1,24 +1,4 @@
-function showPopupError(inputElement, message) {
-    const popup = document.createElement('div');
-    popup.className = 'input-popup-error';
-    popup.textContent = message;
-
-    document.body.appendChild(popup);
-
-    const rect = inputElement.getBoundingClientRect();
-    popup.style.top = `${rect.top + window.scrollY - 35}px`;
-    popup.style.left = `${rect.left + window.scrollX}px`;
-
-    setTimeout(() => {
-        popup.remove();
-    }, 1000); // Tự ẩn sau 1 giây
-}
-
 document.addEventListener("DOMContentLoaded", () => {
-    const provinceInput = document.getElementById('province');
-    const districtInput = document.getElementById('district');
-    const wardInput = document.getElementById('ward');
-
     const provinceListData = document.getElementById('provinceList');
 
     window.openAddressPopup = async function () {
@@ -40,9 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     window.submitForm = function () {
-        let isValid = true;
-
-        // Lấy các trường dữ liệu
+        // Simple validation - just check if fields are filled
         const fullNameInput = document.querySelector('input[name="fullName"]');
         const phoneInput = document.querySelector('input[name="phone"]');
         const provinceInput = document.getElementById('province');
@@ -51,43 +29,43 @@ document.addEventListener("DOMContentLoaded", () => {
         const addressDetailInput = document.querySelector('textarea[name="addressDetail"]');
         const addressTypeInput = document.querySelector('input[name="addressType"]:checked');
 
-        // Kiểm tra từng trường
+        // Simple required field validation
         if (!fullNameInput.value.trim()) {
-            showPopupError(fullNameInput, "Vui lòng nhập họ và tên");
-            isValid = false;
+            alert("Vui lòng nhập họ và tên");
+            fullNameInput.focus();
+            return;
         }
         if (!phoneInput.value.trim()) {
-            showPopupError(phoneInput, "Vui lòng nhập số điện thoại");
-            isValid = false;
+            alert("Vui lòng nhập số điện thoại");
+            phoneInput.focus();
+            return;
         }
         if (!provinceInput.value.trim()) {
-            showPopupError(provinceInput, "Vui lòng chọn tỉnh/thành phố");
-            isValid = false;
+            alert("Vui lòng chọn tỉnh/thành phố");
+            provinceInput.focus();
+            return;
         }
         if (!districtInput.value.trim()) {
-            showPopupError(districtInput, "Vui lòng chọn quận/huyện");
-            isValid = false;
+            alert("Vui lòng chọn quận/huyện");
+            districtInput.focus();
+            return;
         }
         if (!wardInput.value.trim()) {
-            showPopupError(wardInput, "Vui lòng chọn phường/xã");
-            isValid = false;
+            alert("Vui lòng chọn phường/xã");
+            wardInput.focus();
+            return;
         }
         if (!addressDetailInput.value.trim()) {
-            showPopupError(addressDetailInput, "Vui lòng nhập địa chỉ cụ thể");
-            isValid = false;
+            alert("Vui lòng nhập địa chỉ cụ thể");
+            addressDetailInput.focus();
+            return;
         }
         if (!addressTypeInput) {
-            // Lấy radio group để báo lỗi
-            const addressTypeRadios = document.querySelectorAll('input[name="addressType"]');
-            if (addressTypeRadios.length > 0) {
-                showPopupError(addressTypeRadios[0], "Vui lòng chọn loại địa chỉ");
-            }
-            isValid = false;
+            alert("Vui lòng chọn loại địa chỉ");
+            return;
         }
 
-        if (!isValid) return; // Nếu có lỗi thì không gửi form
-
-        // Nếu hợp lệ thì tiếp tục gửi dữ liệu như cũ
+        // Prepare data
         const rawAddressType = addressTypeInput?.value || '';
         let addressTypeCode = '';
         if (rawAddressType === 'Nhà riêng') {
@@ -97,12 +75,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         const data = {
             id: parseInt(document.querySelector('input[name="id"]').value) || null,
-            fullName: document.querySelector('input[name="fullName"]').value,
-            phone: document.querySelector('input[name="phone"]').value,
-            province: document.getElementById('province').value,
-            district: document.getElementById('district').value,
-            ward: document.getElementById('ward').value,
-            addressDetail: document.querySelector('textarea[name="addressDetail"]').value,
+            fullName: fullNameInput.value,
+            phone: phoneInput.value,
+            province: provinceInput.value,
+            district: districtInput.value,
+            ward: wardInput.value,
+            addressDetail: addressDetailInput.value,
             addressType: addressTypeCode,
             isDefault: document.querySelector('input[name="isDefault"]').checked
         };
@@ -120,17 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     // Cập nhật lại phần address-details nếu có addressDefault mới
                     if (response.addressDefault) {
                         updateAddressDetails(response.addressDefault);
-                        if (!document.getElementById('shipping-methods')) {
-                            const shippingInfoContainer = document.querySelector('.shipping-info');
-                            if (shippingInfoContainer) {
-                                const div = document.createElement('div');
-                                div.id = 'shipping-methods';
-                                shippingInfoContainer.appendChild(div);
-                            }
-                        }
-                        const redNotice = document.querySelector('.shipping-info div[style*="red"]');
-                        if (redNotice) redNotice.remove();
-                        loadShippingMethods();
                     }
                     alert("Lưu địa chỉ thành công!");
                     closeAddressPopup();
@@ -144,170 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     };
 
-    provinceInput.addEventListener('blur', () => {
-        districtInput.value = "";
-        wardInput.value = "";
-        document.getElementById('districtList').innerHTML = "";
-        document.getElementById('wardList').innerHTML = "";
-        if (isProvinceValid()) {
-            fetchDistricts();
-        }
-
-    });
-
-    districtInput.addEventListener('blur', () => {
-        wardInput.value = "";
-        document.getElementById('wardList').innerHTML = "";
-        if (isDistrictValid()) {
-            fetchWards();
-        }
-
-    });
-
-    wardInput.addEventListener('blur', () => {
-        isWardValid();
-    });
-
-    async function fetchProvinces() {
-        try {
-            const response = await fetch(`${contextPath}/provinces`);
-            const data = await response.json();
-            if (data.code === 200 && data.data) {
-                provinceListData.innerHTML = "";
-                data.data.forEach(province => {
-                    const option = document.createElement('option');
-                    option.value = province.name;
-                    option.dataset.provinceId = province.id;
-                    provinceListData.appendChild(option);
-                });
-            } else {
-                console.error('Lỗi khi lấy tỉnh:', data.message);
-            }
-        } catch (error) {
-            console.error('Lỗi kết nối tới servlet /provinces:', error);
-        }
-    }
 });
-
-async function fetchDistricts() {
-    const provinceInput = document.getElementById('province');
-    const provinceListData = document.getElementById('provinceList');
-    const districtListData = document.getElementById('districtList');
-
-    const provinceValue = provinceInput.value.trim();
-    const matchedOption = Array.from(provinceListData.options).find(option => option.value === provinceValue);
-
-    if (!matchedOption) {
-        showPopupError(provinceInput, "Tỉnh/Thành không hợp lệ");
-        return;
-    }
-
-    const provinceId = matchedOption.dataset.provinceId;
-
-    try {
-        const response = await fetch(`${contextPath}/districts?province_id=${provinceId}`);
-        const data = await response.json();
-        if (data.code === 200 && data.data) {
-            districtListData.innerHTML = "";
-            data.data.forEach(district => {
-                const option = document.createElement('option');
-                option.value = district.name;
-                option.dataset.districtId = district.id;
-                districtListData.appendChild(option);
-            });
-        } else {
-            console.error('Lỗi khi lấy quận/huyện:', data.message);
-        }
-    } catch (error) {
-        console.error('Lỗi kết nối tới servlet /districts:', error);
-    }
-}
-
-async function fetchWards() {
-    const districtInput = document.getElementById('district');
-    const districtListData = document.getElementById('districtList');
-    const wardListData = document.getElementById('wardList');
-
-    const districtValue = districtInput.value.trim();
-    const matchedOption = Array.from(districtListData.options).find(option => option.value === districtValue);
-
-    if (!matchedOption) {
-        showPopupError(districtInput, "Quận/huyện không hợp lệ");
-        return;
-    }
-
-    const districtId = matchedOption.dataset.districtId;
-
-    try {
-        const response = await fetch(`${contextPath}/wards?district_id=${districtId}`);
-        const data = await response.json();
-
-        if (data.code === 200 && data.data) {
-            wardListData.innerHTML = "";
-            data.data.forEach(ward => {
-                const option = document.createElement('option');
-                option.value = ward.name;
-                option.dataset.wardId = ward.id;
-                wardListData.appendChild(option);
-            });
-        } else {
-            console.error('Lỗi khi lấy phường/xã:', data.message);
-        }
-    } catch (error) {
-        console.error('Lỗi kết nối tới servlet /wards:', error);
-    }
-}
-
-function isProvinceValid() {
-    const provinceInput = document.getElementById('province');
-    const provinceListData = document.getElementById('provinceList');
-    const provinceValue = provinceInput.value.trim();
-
-    const options = Array.from(provinceListData.options);
-    const matchedOption = options.find(option => option.value === provinceValue);
-    if (!matchedOption) {
-        showPopupError(provinceInput, "Tỉnh/Thành không hợp lệ");
-        provinceInput.classList.add('input-error');
-        provinceInput.focus();
-        return false;
-    }
-    provinceInput.classList.remove('input-error');
-    return true;
-}
-
-function isDistrictValid() {
-    const districtInput = document.getElementById('district');
-    const districtListData = document.getElementById('districtList');
-    const districtValue = districtInput.value.trim();
-
-    const options = Array.from(districtListData.options);
-    const matchedOption = options.find(option => option.value === districtValue);
-    if (!matchedOption) {
-        showPopupError(districtInput, "Quận/huyện không hợp lệ");
-        districtInput.classList.add('input-error');
-        districtInput.focus();
-        return false;
-    }
-    districtInput.classList.remove('input-error');
-    return true;
-}
-
-function isWardValid() {
-    const wardInput = document.getElementById('ward');
-    const wardListData = document.getElementById('wardList');
-    const wardValue = wardInput.value.trim();
-
-    const options = Array.from(wardListData.options);
-    const matchedOption = options.find(option => option.value === wardValue);
-    if (!matchedOption) {
-        showPopupError(wardInput, "Phường/xã không hợp lệ");
-        wardInput.classList.add('input-error');
-        wardInput.focus();
-        return false;
-    }
-    wardInput.classList.remove('input-error');
-    return true;
-}
 
 // Dùng để đổ dữ liệu từ danh sách vào form
 function editAddress(data) {
@@ -418,7 +222,7 @@ function backToAddressList() {
 
 function deleteAddress(addressId, isDefault) {
     if (isDefault) {
-        showPopupError(document.querySelector(`[data-address-id="${addressId}"]`), 'Không thể xóa địa chỉ mặc định.');
+        alert('Không thể xóa địa chỉ mặc định.');
         return;
     }
 
@@ -427,7 +231,7 @@ function deleteAddress(addressId, isDefault) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({addressId: addressId})
+        body: JSON.stringify({ addressId: addressId })
     })
         .then(response => response.json())
         .then(data => {
@@ -437,8 +241,6 @@ function deleteAddress(addressId, isDefault) {
                 if (addressElement) {
                     addressElement.remove();
                 }
-                // Nếu muốn đồng bộ lại danh sách, có thể reload hoặc cập nhật lại addressList ở đây
-                // location.reload(); // hoặc gọi hàm load lại danh sách địa chỉ
             } else {
                 alert(data.message || 'Có lỗi xảy ra khi xóa địa chỉ.');
             }
@@ -454,18 +256,16 @@ function setDefaultAddress(addressId) {
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({addressId: addressId})
+        body: JSON.stringify({ addressId: addressId })
     })
         .then(res => res.json())
         .then(data => {
-            console.log("📦 JSON response từ server:", data); // 👉 In toàn bộ JSON
+            console.log("📦 JSON response từ server:", data);
             console.log("📮 addressDefault từ server:", data.addressDefault);
             if (data.status) {
                 // Cập nhật lại phần address-details nếu có addressDefault mới
-
                 if (data.addressDefault) {
                     updateAddressDetails(data.addressDefault);
-                    loadShippingMethods();
                 }
                 // Cập nhật trạng thái mặc định trong danh sách địa chỉ
                 const addressCards = document.querySelectorAll('.address-card');
@@ -520,6 +320,24 @@ function updateAddressDetails(address) {
         addressDetails.appendChild(addressInput); // Gắn ngay sau địa chỉ
     }
     addressInput.value = JSON.stringify(address);
+
+    // Xóa thông báo lỗi màu đỏ "Vui lòng cập nhật địa chỉ đơn hàng"
+    const shippingInfo = document.querySelector('.shipping-info');
+    if (shippingInfo) {
+        const redNotice = shippingInfo.querySelector('div[style*="red"]');
+        if (redNotice) {
+            redNotice.remove();
+        }
+
+        // Thêm shipping-methods div nếu chưa có
+        let shippingMethodsDiv = document.getElementById('shipping-methods');
+        if (!shippingMethodsDiv) {
+            shippingMethodsDiv = document.createElement('div');
+            shippingMethodsDiv.id = 'shipping-methods';
+            shippingMethodsDiv.innerHTML = '<div class="loading"></div>';
+            shippingInfo.appendChild(shippingMethodsDiv);
+        }
+    }
 }
 
 function showAddressFormOnly() {
@@ -542,4 +360,5 @@ function handleEditButton(btn) {
     };
 
     editAddress(data);
+    showAddressFormOnly();
 }

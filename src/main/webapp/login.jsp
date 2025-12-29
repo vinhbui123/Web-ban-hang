@@ -19,13 +19,6 @@
             text-align: center;
             margin-bottom: 10px;
         }
-
-        .countdown {
-            font-weight: bold;
-            color: orange;
-            text-align: center;
-            margin-bottom: 15px;
-        }
     </style>
 </head>
 <body>
@@ -48,7 +41,6 @@
             <c:if test="${not empty errorMessage}">
                 <div class="error-message">${errorMessage}</div>
             </c:if>
-
 
             <!-- Tên đăng nhập -->
             <div class="login__field">
