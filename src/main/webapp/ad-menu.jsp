@@ -12,15 +12,12 @@
     <ul>
         <li><a href="home">Trang Chủ</a></li>
         <li><a href="admin">Thống Kê Tổng Quan</a></li>
-        <li><a href="adminProduct">Quản Lý Sản Phẩm</a></li>
-        <li><a href="adminCategory">Quản lý Danh Mục</a>
+        <li><a href="adminProducts">Quản Lý Sản Phẩm</a></li>
+        <li><a href="adminCategorys">Quản lý Danh Mục</a>
         <li><a href="adminMaterials">Quản lý Chất Liệu Sản Phẩm</a>
         <li><a href="adminOrders">Quản Lý Đơn Hàng</a></li>
         <li><a href="adminUsers">Quản Lý Tài Khoản</a>
-        <li><a href="adminLogs">Lịch Sử Hoạt Động</a>
-        <li><a href="adminInventory">Quản Lý Xuất Nhập Sản Phẩm</a></li>
-        <li><a href="adminTransactions">Quản Lý Giao Dịch Sản Phẩm</a></li>
-        <li><a href="adminComment">Quản Lý Đánh Giá</a></li>
+        <li><a href="adminComments">Quản Lý Đánh Giá</a>
         <li><a href="logout" class="btn-logout">Đăng Xuất</a></li>
     </ul>
 </div>

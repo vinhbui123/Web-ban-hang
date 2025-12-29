@@ -1,4 +1,4 @@
-package vn.edu.hcmuaf.fit.Web_ban_hang.controller.user.cart;
+package vn.edu.hcmuaf.fit.Web_ban_hang.controller.user.product;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@WebServlet(name = "ListProduct", value = "/list-product")
+@WebServlet(name = "ListProductController", value = "/list-product")
 public class ListProductController extends HttpServlet {
     private final ProductService productService = new ProductService();
     private final CategoryService categoryService = new CategoryService();
@@ -22,6 +22,10 @@ public class ListProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
         // Get all categories for filter dropdown
         List<Category> categories = categoryService.getAll();
         request.setAttribute("categories", categories);

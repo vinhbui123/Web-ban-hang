@@ -126,17 +126,9 @@ function updateOrderSummaryShipping(shippingFee) {
 }
 
 
-// Gọi khi trang vừa tải xong
-// Đảm bảo gọi sau khi DOM đã sẵn sàng và có địa chỉ mặc định
-
 document.addEventListener('DOMContentLoaded', function () {
     loadShippingMethods();
 });
-
-// Khi cập nhật địa chỉ mặc định (sau khi lưu/chọn địa chỉ mới), hãy gọi:
-// updateAddressDetails(response.addressDefault);
-// loadShippingMethods();
-// (Chèn đoạn này vào callback thành công của AJAX cập nhật địa chỉ)
 
 // Reload shipping methods when address changes
 document.querySelector('.change-shipping').addEventListener('click', function (e) {

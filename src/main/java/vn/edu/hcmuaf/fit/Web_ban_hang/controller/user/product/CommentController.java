@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @WebServlet(name = "CommentServlet", value = "/comment")
-public class CommentServlet extends HttpServlet {
+public class CommentController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

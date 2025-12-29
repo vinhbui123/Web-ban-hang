@@ -31,6 +31,8 @@
             </tr>
             </thead>
             <tbody>
+            <jsp:useBean id="comments" scope="request" type="java.util.List"/>
+
             <c:forEach var="cmt" items="${comments}">
                 <tr>
                     <td>${cmt.id}</td>
@@ -40,9 +42,13 @@
                     <td>${cmt.content}</td>
                     <td>${cmt.createdAt}</td>
                     <td>
-                        <c:if test="${sessionScope.user.role.canDelete}">
-                            <form action="${pageContext.request.contextPath}/adminDelete" method="post" style="display:inline;">
+                        <c:if test="${sessionScope.user.role == 1}">
+                            <form action="${pageContext.request.contextPath}/adminComments" method="post" style="display:inline;">
+
+                                <input type="hidden" name="action" value="delete">
+
                                 <input type="hidden" name="id" value="${cmt.id}">
+
                                 <button class="btn-delete" type="submit" onclick="return confirm('Bạn có chắc muốn xoá đánh giá này?');">
                                     <i class="fa-solid fa-trash"></i> Xoá
                                 </button>

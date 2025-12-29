@@ -10,7 +10,6 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 public class UserDao {
@@ -156,7 +155,7 @@ public class UserDao {
         return queryList("SELECT * FROM users");
     }
 
-    // 3. Authentication
+    // 3. Xác thực
     public User authenticateUser(String username, String currentPassword) {
         // Lấy user từ DB lên trước
         User user = getUserByUsername(username);
@@ -177,7 +176,7 @@ public class UserDao {
         String sql = "INSERT INTO users (username, password, first_name, last_name, avatar, birthday, email, phone_number, address, role, status, bio, create_at, update_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         Timestamp now = Timestamp.valueOf(LocalDateTime.now());
-        // Default Role = 0 if not set
+        // set role mặc định là 0 nếu không có
         int roleId = user.getRole() != 0 ? user.getRole() : 0;
 
         return executeUpdate(sql,
@@ -210,7 +209,7 @@ public class UserDao {
         );
     }
 
-    // 5. Update Methods
+    // 5. Cập nhật thông tin người dùng
     public boolean updateUser(User user) {
         String sql = "UPDATE users SET first_name = ?, last_name = ?, phone_number = ?, address = ?, bio = ?, avatar = ? WHERE username = ?";
         return executeUpdate(sql,
@@ -234,7 +233,4 @@ public class UserDao {
         return queryScalar("SELECT logged_session_id FROM users WHERE id = ?", String.class, userId);
     }
 
-    public void updateSessionId(int userId, String sessionId) {
-        executeUpdate("UPDATE users SET logged_session_id = ? WHERE id = ?", sessionId, userId);
-    }
 }

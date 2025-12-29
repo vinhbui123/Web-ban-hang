@@ -28,7 +28,7 @@
         </div>
         <div class="image">
             <div class="small-img">
-                <img src="${product.img}" onclick="showImg(this.src)"alt="Product image" >
+                <img src="${product.img}" onclick="showImg(this.src)" alt="Product image">
             </div>
             <!-- Lặp qua các hình ảnh phụ -->
             <c:forEach var="image" items="${product.subImg}">
@@ -49,21 +49,30 @@
             </ul>
         </div>
         <div class="name">${product.name}</div>
-        <div class="ratings">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star-half-alt"></i>
+        <div class="rating-stars">
+            <c:forEach begin="1" end="5" var="i">
+                <c:choose>
+                    <c:when test="${i <= averageRating}">
+                        <i class="fas fa-star"></i>
+                    </c:when>
+                    <c:when test="${i - 0.5 <= averageRating}">
+                        <i class="fas fa-star-half-alt"></i>
+                    </c:when>
+                    <c:otherwise>
+                        <i class="far fa-star"></i>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
         </div>
         <p class="price">
             <c:choose>
                 <c:when test="${product.discount > 0}">
-                    <f:formatNumber value="${(product.price - (product.price * product.discount / 100))}" pattern="#,##0đ" />
-                    <span class="gia-cu"><f:formatNumber value="${product.price}" pattern="#,##0đ" /></span>
+                    <f:formatNumber value="${(product.price - (product.price * product.discount / 100))}"
+                                    pattern="#,##0đ"/>
+                    <span class="gia-cu"><f:formatNumber value="${product.price}" pattern="#,##0đ"/></span>
                 </c:when>
                 <c:otherwise>
-                    <f:formatNumber value="${product.price}" pattern="#,##0đ" />
+                    <f:formatNumber value="${product.price}" pattern="#,##0đ"/>
                 </c:otherwise>
             </c:choose>
         </p>
@@ -109,7 +118,7 @@
 
 <div class="comment-section">
     <h2>ĐÁNH GIÁ SẢN PHẨM</h2>
-    
+
     <div class="rating-overview">
         <div class="rating-number">
             <c:choose>
@@ -182,7 +191,7 @@
                             </c:forEach>
                         </div>
                         <div class="comment-content">
-                            ${comment.content}
+                                ${comment.content}
                         </div>
                     </div>
                 </c:forEach>
@@ -205,15 +214,15 @@
                     <div class="hinh-sp">
                         <img src="${p.img}" alt="${p.name}">
                     </div>
-                    <p class="ten-sp">${p.name}  </p>
+                    <p class="ten-sp">${p.name} </p>
                     <p class="gia-tien">
                         <c:choose>
                             <c:when test="${p.discount > 0}">
-                                <f:formatNumber value="${(p.price - (p.price * p.discount / 100))}" pattern="#,##0đ" />
-                                <span class="gia-cu"><f:formatNumber value="${p.price}" pattern="#,##0đ" /></span>
+                                <f:formatNumber value="${(p.price - (p.price * p.discount / 100))}" pattern="#,##0đ"/>
+                                <span class="gia-cu"><f:formatNumber value="${p.price}" pattern="#,##0đ"/></span>
                             </c:when>
                             <c:otherwise>
-                                <f:formatNumber value="${p.price}" pattern="#,##0đ" />
+                                <f:formatNumber value="${p.price}" pattern="#,##0đ"/>
                             </c:otherwise>
                         </c:choose>
                     </p>

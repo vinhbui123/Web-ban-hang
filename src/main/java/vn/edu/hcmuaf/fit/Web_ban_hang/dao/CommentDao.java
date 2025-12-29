@@ -1,5 +1,7 @@
 package vn.edu.hcmuaf.fit.Web_ban_hang.dao;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import vn.edu.hcmuaf.fit.Web_ban_hang.db.DBConnect;
 import vn.edu.hcmuaf.fit.Web_ban_hang.model.Comment;
 
@@ -9,51 +11,53 @@ import java.util.List;
 
 public class CommentDao {
 
-    // ✅ Lấy danh sách comment theo productId, kèm theo username nếu có
+    private static final Logger log = LoggerFactory.getLogger(CommentDao.class);
+
+    // Lấy danh sách comment theo productId
     public List<Comment> getCommentsByProductId(int productId) {
         List<Comment> comments = new ArrayList<>();
+        // FIX: Changed 'created_at' to 'create_at' and 'content' will be handled in loop
         String query = "SELECT c.*, u.username " +
                 "FROM comments c " +
                 "JOIN ( " +
-                "    SELECT user_id, MAX(created_at) AS latest_time " +
+                "    SELECT user_id, MAX(create_at) AS latest_time " +
                 "    FROM comments " +
                 "    WHERE product_id = ? " +
                 "    GROUP BY user_id " +
-                ") latest ON c.user_id = latest.user_id AND c.created_at = latest.latest_time " +
+                ") latest ON c.user_id = latest.user_id AND c.create_at = latest.latest_time " +
                 "LEFT JOIN users u ON c.user_id = u.id " +
                 "WHERE c.product_id = ? " +
-                "ORDER BY c.created_at DESC";
+                "ORDER BY c.create_at DESC";
 
         try (Connection conn = DBConnect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, productId); // cho subquery
-            stmt.setInt(2, productId); // cho outer query
+            stmt.setInt(1, productId);
+            stmt.setInt(2, productId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Comment cmt = new Comment();
                 cmt.setId(rs.getInt("id"));
                 cmt.setProductId(rs.getInt("product_id"));
                 cmt.setUserId(rs.getInt("user_id"));
-                cmt.setContent(rs.getString("content"));
+
+                cmt.setContent(rs.getString("comment"));
+
                 cmt.setRating(rs.getInt("rating"));
-                cmt.setCreatedAt(rs.getTimestamp("created_at"));
+
+                cmt.setCreatedAt(rs.getTimestamp("create_at"));
 
                 String username = rs.getString("username");
-                if (username != null && !username.isEmpty()) {
                     cmt.setUserName(username);
-                } else {
-                    cmt.setUserName("Ẩn danh");
-                }
+
 
                 comments.add(cmt);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
         return comments;
     }
 
-    // Tính điểm đánh giá trung bình theo productId
     public double getAverageRatingByProductId(int productId) {
         String query = "SELECT AVG(rating) AS avg FROM comments WHERE product_id = ?";
         try (Connection conn = DBConnect.getConnection();
@@ -69,27 +73,46 @@ public class CommentDao {
         return 0.0;
     }
 
-    // Thêm comment mới
     public void addComment(Comment comment) {
-        String query = "INSERT INTO comments (product_id, user_id, content, rating, created_at) VALUES (?, ?, ?, ?, ?)";
-        try (Connection conn = DBConnect.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+        // Attempt to update the existing comment for this specific user and product
+        String updateQuery = "UPDATE comments SET comment = ?, rating = ?, create_at = ? " +
+                "WHERE product_id = ? AND user_id = ?";
 
-            stmt.setInt(1, comment.getProductId());
-            stmt.setInt(2, comment.getUserId());
-            stmt.setString(3, comment.getContent());
-            stmt.setInt(4, comment.getRating());
-            stmt.setTimestamp(5, comment.getCreatedAt());
+        String insertQuery = "INSERT INTO comments (product_id, user_id, comment, rating, create_at) " +
+                "VALUES (?, ?, ?, ?, ?)";
 
-            stmt.executeUpdate();
+        try (Connection conn = DBConnect.getConnection()) {
+            // Step 1: Try updating first
+            try (PreparedStatement updateStmt = conn.prepareStatement(updateQuery)) {
+                updateStmt.setString(1, comment.getContent());
+                updateStmt.setInt(2, comment.getRating());
+                updateStmt.setTimestamp(3, comment.getCreatedAt());
+                updateStmt.setInt(4, comment.getProductId());
+                updateStmt.setInt(5, comment.getUserId());
+
+                int rowsAffected = updateStmt.executeUpdate();
+
+                // Step 2: If no rows were updated, it's a new comment, so insert it
+                if (rowsAffected == 0) {
+                    try (PreparedStatement insertStmt = conn.prepareStatement(insertQuery)) {
+                        insertStmt.setInt(1, comment.getProductId());
+                        insertStmt.setInt(2, comment.getUserId());
+                        insertStmt.setString(3, comment.getContent());
+                        insertStmt.setInt(4, comment.getRating());
+                        insertStmt.setTimestamp(5, comment.getCreatedAt());
+                        insertStmt.executeUpdate();
+                    }
+                }
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
-    // Lấy tất cả comment (cho admin)
+
     public List<Comment> getAllComments() {
         List<Comment> list = new ArrayList<>();
-        String sql = "SELECT c.*, u.username FROM comments c LEFT JOIN users u ON c.user_id = u.id ORDER BY c.created_at DESC";
+        // FIX: create_at
+        String sql = "SELECT c.*, u.username FROM comments c LEFT JOIN users u ON c.user_id = u.id ORDER BY c.create_at DESC";
         try (Connection conn = DBConnect.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -99,18 +122,22 @@ public class CommentDao {
                 c.setProductId(rs.getInt("product_id"));
                 c.setUserId(rs.getInt("user_id"));
                 c.setRating(rs.getInt("rating"));
-                c.setContent(rs.getString("content"));
-                c.setCreatedAt(rs.getTimestamp("created_at"));
+
+                // FIX: comment
+                c.setContent(rs.getString("comment"));
+
+                // FIX: create_at
+                c.setCreatedAt(rs.getTimestamp("create_at"));
+
                 c.setUserName(rs.getString("username"));
                 list.add(c);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
         return list;
     }
 
-    // Xoá comment
     public void deleteCommentById(int id) {
         String sql = "DELETE FROM comments WHERE id = ?";
         try (Connection conn = DBConnect.getConnection();
@@ -118,8 +145,7 @@ public class CommentDao {
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
-
 }

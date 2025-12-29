@@ -15,7 +15,7 @@ import vn.edu.hcmuaf.fit.Web_ban_hang.services.ProductService;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "Show", value = "/adminProduct")
+@WebServlet(name = "Show", value = "/adminProducts")
 public class Show extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

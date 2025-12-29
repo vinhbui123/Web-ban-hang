@@ -95,9 +95,9 @@
                         <span class="cart-text">Đơn Mua</span>
                     </div>
 
-                    <%-- Admin Check (Role != 0) --%>
-                    <c:if test="${user.role != 0}">
-                        <a href="${pageContext.request.contextPath}/adminProduct" class="admin-btn">
+                    <%-- Admin Check (Role == 1) --%>
+                    <c:if test="${user.role == 1}">
+                        <a href="${pageContext.request.contextPath}/adminProducts" class="admin-btn">
                             <i class="fa-solid fa-user-tie"></i> Trang Quản Trị
                         </a>
                     </c:if>

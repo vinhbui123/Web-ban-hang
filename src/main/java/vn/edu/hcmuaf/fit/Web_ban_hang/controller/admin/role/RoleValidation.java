@@ -18,9 +18,6 @@ public class RoleValidation implements Filter {
 
     private final CategoryDao categoryDao = new CategoryDao();
 
-    // Tắt chế độ TEST (BỎ QUA toàn bộ kiểm tra admin)
-    private static final boolean TEST_MODE = false; // Đã đổi thành FALSE
-
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
@@ -28,13 +25,13 @@ public class RoleValidation implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
 
-        // Lấy session, nếu chưa có thì tạo mới (true) hoặc không (false). Dùng false là đủ
-        HttpSession session = req.getSession(false);
         String uri = req.getRequestURI();
         String contextPath = req.getContextPath();
 
         // 1. Bỏ qua tài nguyên tĩnh và các trang công khai (login, register)
+        // Để tránh vòng lặp redirect vô hạn hoặc chặn file css/js
         if (uri.endsWith("login.jsp") || uri.endsWith("register.jsp")
+                || uri.contains("/login") || uri.contains("/register") // Thêm trường hợp mapping URL không đuôi .jsp
                 || uri.contains("/api/") || uri.contains("/css/")
                 || uri.contains("/js/") || uri.contains("/images/")
                 || uri.contains("/fonts/") || uri.endsWith(".png")
@@ -45,74 +42,51 @@ public class RoleValidation implements Filter {
             return;
         }
 
-        if (TEST_MODE) {
-            // Trong môi trường thực tế, phần này phải được loại bỏ hoàn toàn.
-            // Nếu bạn giữ lại, hãy đảm bảo rằng TEST_MODE LUÔN LÀ FALSE khi deploy.
-
-            // Xử lý logic TEST_MODE như đã định nghĩa ban đầu (có thể bỏ qua nếu đã tắt TEST_MODE)
-            if (session == null || session.getAttribute("user") == null) {
-                User dummy = new User();
-                dummy.setId(0);
-                dummy.setRole(0); // Giả lập quyền Admin (nếu cần kiểm tra admin trong TEST_MODE)
-                if (session == null) session = req.getSession(true);
-                session.setAttribute("user", dummy);
-            }
-            if (session.getAttribute("category") == null) {
-                List<Category> categories = categoryDao.getAll();
-                session.setAttribute("category", categories);
-            }
-            chain.doFilter(request, response);
-            return;
-        }
-
-        // ==========================================
-        //  CODE ORIGINAL (chạy khi TEST_MODE = false)
-        // ==========================================
-
-        // Đảm bảo session được tạo nếu chưa có để lưu Category nếu cần
-        if (session == null) session = req.getSession(true);
+        // Tạo session nếu chưa có để lưu Category hoặc lấy User
+        HttpSession session = req.getSession(true);
         User sessionUser = (User) session.getAttribute("user");
 
-        // Load category (chỉ load một lần)
+        // 2. Load Global Data (Ví dụ: Danh mục sản phẩm cho Menu)
+        // Logic này giữ lại vì cần hiển thị Category ở mọi trang
         if (session.getAttribute("category") == null) {
             List<Category> categories = categoryDao.getAll();
             session.setAttribute("category", categories);
         }
 
-        // 2. Kiểm tra truy cập trang Admin
-        // Chỉ cần kiểm tra nếu URI chứa "/admin" (hoặc thư mục admin của bạn)
+        // 3. Kiểm tra bảo mật cho trang Admin
         if (uri.contains("/admin")) {
 
-//            // 2.1. Kiểm tra đăng nhập
-//            if (sessionUser == null) {
-//                // Chưa đăng nhập -> Chuyển hướng đến trang login
-//                resp.sendRedirect(contextPath + "/login");
-//                return;
-//            }
-
-            // 2.2. Kiểm tra trạng thái và cập nhật user
-            User freshUser = new UserService().getById(sessionUser.getId());
-
-            if (freshUser == null || freshUser.getStatus() == 0) {
-                // User không tồn tại hoặc bị khóa/vô hiệu hóa (Status = 0)
-                session.invalidate(); // Xóa session cũ
-                resp.sendRedirect(contextPath + "/login"); // Chuyển hướng đến trang login
+            // 3.1. Kiểm tra đăng nhập (session có tồn tại User không?)
+            if (sessionUser == null) {
+                // Chưa đăng nhập -> Chuyển hướng về trang Login
+                resp.sendRedirect(contextPath + "/login.jsp"); // Hoặc đường dẫn mapping "/login"
                 return;
             }
 
-            // Cập nhật session user (để lấy thông tin mới nhất và status)
+            // 3.2. Kiểm tra trạng thái thực tế từ Database (đề phòng User bị khóa trong lúc đang đăng nhập)
+            UserService userService = new UserService();
+            User freshUser = userService.getById(sessionUser.getId());
+
+            if (freshUser == null || freshUser.getStatus() == 0) {
+                // User không tồn tại hoặc bị khóa (Status = 0) -> Hủy session và đá về Login
+                session.invalidate();
+                resp.sendRedirect(contextPath + "/login.jsp");
+                return;
+            }
+
+            // Cập nhật lại thông tin user mới nhất vào session
             session.setAttribute("user", freshUser);
 
-            // 2.3. Kiểm tra query Admin (Giả sử Role 1 là Admin)
-            if (freshUser.getRole() != 1) { // Thay đổi điều kiện này tùy theo logic phân quyền của bạn
-                // Không có quyền Admin -> Chuyển hướng đến trang lỗi 403 hoặc trang chủ
-                resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Bạn không có quyền truy cập trang này."); // Mã lỗi 403
-                // Hoặc: resp.sendRedirect(contextPath + "/home");
+            // 3.3. Kiểm tra quyền (Role)
+            // Giả sử: 0 = User thường, 1 = Admin (hoặc > 0 là Admin tùy quy ước)
+            if (freshUser.getRole() != 1) {
+                // Đã đăng nhập nhưng không phải Admin -> Báo lỗi 403 Forbidden
+                resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Bạn không có quyền truy cập trang quản trị.");
                 return;
             }
         }
 
-        // 3. Cho phép truy cập (đối với trang thường hoặc trang admin đã thỏa mãn điều kiện)
+        // 4. Cho phép request đi tiếp (vào trang chủ, trang sản phẩm, hoặc trang admin nếu đã qua các bước kiểm tra trên)
         chain.doFilter(request, response);
     }
 }

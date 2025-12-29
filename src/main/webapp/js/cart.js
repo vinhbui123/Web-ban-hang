@@ -11,10 +11,10 @@ function showCartPopup(message, isSuccess = true) {
 
     popup.classList.remove("hidden");
 
-    // Tự động ẩn sau 2 giây
+    // Tự động ẩn sau 1 giây
     const timeoutId = setTimeout(() => {
         hideCartPopup();
-    }, 2000);
+    }, 1000);
 
     // Click để ẩn popup
     function onClickAnywhere() {
@@ -77,11 +77,9 @@ function addToCart(productId, quantity = 1) {
 
 // Event Delegation cho tất cả button add-to-cart
 document.addEventListener("DOMContentLoaded", function () {
-    // Delegation trên product-list
     const productContainer = document.querySelector(".product-list");
     if (productContainer) {
         productContainer.addEventListener("click", function (event) {
-            // Match cả 2 class: .add-to-cart (button) và .add-to-cart-btn (link)
             const button = event.target.closest(".add-to-cart, .add-to-cart-btn");
             if (!button) return;
 
@@ -98,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Delegation cho product-detail page (nếu có)
+    // Delegation cho product-detail page
     const detailAddBtn = document.querySelector(".detail-add-to-cart");
     if (detailAddBtn) {
         detailAddBtn.addEventListener("click", function (event) {
@@ -113,3 +111,66 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+function updateSelection(productId, isSelected) {
+    const contextPath = document.body.dataset.contextPath || '';
+
+    fetch(`${contextPath}/api/cart`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            action: "updateSelection",
+            id: parseInt(productId),
+            selected: isSelected
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === true) {
+                // Update total display
+                const totalDisplay = document.querySelector(".cart-summary .product-total span:last-child");
+                if (totalDisplay) {
+                    totalDisplay.innerText = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data.total);
+                }
+            } else {
+                showCartPopup(data.message, false);
+            }
+        })
+        .catch(error => {
+            console.error("Lỗi update selection:", error);
+        });
+}
+
+function selectAll(isSelected) {
+    const contextPath = document.body.dataset.contextPath || '';
+
+    fetch(`${contextPath}/api/cart`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            action: "selectAll",
+            selected: isSelected
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === true) {
+                // Update specific checkboxes to match 'selectAll' state
+                document.querySelectorAll('.product-checkbox').forEach(cb => cb.checked = isSelected);
+
+                const totalDisplay = document.querySelector(".cart-summary .product-total span:last-child");
+                if (totalDisplay) {
+                    totalDisplay.innerText = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data.total);
+                }
+            } else {
+                showCartPopup(data.message, false);
+            }
+        })
+        .catch(error => {
+            console.error("Lỗi select all:", error);
+        });
+}

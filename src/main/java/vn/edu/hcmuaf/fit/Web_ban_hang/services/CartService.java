@@ -51,6 +51,19 @@ public class CartService implements Serializable {
         return true;
     }
 
+    public boolean updateSelection(int id, boolean selected) {
+        if (!data.containsKey(id))
+            return false;
+        data.get(id).setSelected(selected);
+        return true;
+    }
+
+    public void toggleAllSelection(boolean selected) {
+        for (CartProduct cp : data.values()) {
+            cp.setSelected(selected);
+        }
+    }
+
     public boolean remove(int id) {
         return data.remove(id) != null;
     }
@@ -74,6 +87,16 @@ public class CartService implements Serializable {
 
     public double getTotalWithDiscount() {
         return data.values().stream().mapToDouble(cp -> cp.getDiscountedPrice() * cp.getQuantity()).sum();
+    }
+
+    public double getSelectedTotal() {
+        return data.values().stream().filter(CartProduct::isSelected)
+                .mapToDouble(cp -> cp.getPrice() * cp.getQuantity()).sum();
+    }
+
+    public double getSelectedTotalWithDiscount() {
+        return data.values().stream().filter(CartProduct::isSelected)
+                .mapToDouble(cp -> cp.getDiscountedPrice() * cp.getQuantity()).sum();
     }
 
     public boolean isEmpty() {

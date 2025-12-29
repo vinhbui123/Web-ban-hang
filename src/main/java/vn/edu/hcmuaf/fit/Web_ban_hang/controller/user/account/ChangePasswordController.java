@@ -42,7 +42,7 @@ public class ChangePasswordController extends HttpServlet {
         }
 
         // --- FILTER 1: KIỂM TRA MẬT KHẨU CŨ (Giữ lại để bảo mật) ---
-        // Nếu bạn muốn bỏ qua bước này (để test), hãy comment đoạn if bên dưới lại.
+        // Nếu muốn bỏ qua bước này (để test), hãy comment đoạn if bên dưới lại.
         if (userService.authenticateUser(user.getUsername(), currentPassword) == null) {
             request.setAttribute("error", "Mật khẩu cũ không chính xác!");
             request.getRequestDispatcher("change-password.jsp").forward(request, response);

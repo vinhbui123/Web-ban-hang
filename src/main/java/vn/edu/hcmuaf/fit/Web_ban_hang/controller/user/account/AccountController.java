@@ -98,7 +98,7 @@ public class AccountController extends HttpServlet {
             return;
         }
 
-        // 6. Update Session
+        // Update Session
         session.setAttribute("user", user);
         request.setAttribute("successMessage", "Thông tin của bạn đã được cập nhật thành công.");
         request.getRequestDispatcher("account.jsp").forward(request, response);

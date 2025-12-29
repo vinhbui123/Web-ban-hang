@@ -139,20 +139,32 @@ public class CartController extends HttpServlet {
                     result.put("status", false);
                     result.put("message", "Không đủ hàng trong kho!");
                 }
-            } else if ("remove".equals(action)) {
-                int productId = jsonObject.get("id").getAsInt();
-                cart.remove(productId);
-                result.put("status", true);
                 result.put("message", "Đã xóa sản phẩm!");
+            } else if ("updateSelection".equals(action)) {
+                int productId = jsonObject.get("id").getAsInt();
+                boolean selected = jsonObject.get("selected").getAsBoolean();
+                boolean success = cart.updateSelection(productId, selected);
+                if (success) {
+                    result.put("status", true);
+                    result.put("message", "Cập nhật thành công!");
+                } else {
+                    result.put("status", false);
+                    result.put("message", "Sản phẩm không tồn tại!");
+                }
+            } else if ("selectAll".equals(action)) {
+                boolean selected = jsonObject.get("selected").getAsBoolean();
+                cart.toggleAllSelection(selected);
+                result.put("status", true);
+                result.put("message", "Đã cập nhật tất cả!");
             }
 
             result.put("cartSize", cart.getTotalQuantityAll());
-            result.put("total", cart.getTotalWithDiscount());
+            result.put("total", cart.getSelectedTotalWithDiscount());
 
             out.print(gson.toJson(result));
 
         } catch (Exception e) {
-//            e.printStackTrace();
+            // e.printStackTrace();
             Map<String, Object> error = new HashMap<>();
             error.put("status", false);
             error.put("message", "Lỗi xử lý: " + e.getMessage());

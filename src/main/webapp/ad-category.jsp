@@ -15,7 +15,7 @@
   </header>
 
   <section class="category-management">
-    <c:if test="${sessionScope.user.role.canAdd}">
+    <c:if test="${sessionScope.user.role == 1}">
       <button class="btn-add" onclick="openCategoryModal()">
         <i class="fa-solid fa-plus"></i> Thêm Danh Mục
       </button>
@@ -35,13 +35,13 @@
           <td>${category.id}</td>
           <td>${category.name}</td>
           <td>
-            <c:if test="${sessionScope.user.role.canEdit}">
+            <c:if test="${sessionScope.user.role == 1}">
               <button class="btn-edit" onclick="openEditCategoryModal('${category.id}', '${category.name}')">
                 <i class="fa-solid fa-pen"></i>
               </button>
             </c:if>
 
-            <c:if test="${sessionScope.user.role.canDelete}">
+            <c:if test="${sessionScope.user.role == 1}">
               <form action="${pageContext.request.contextPath}/removeCategory" method="post" style="display: inline;">
                 <input type="hidden" name="categoryId" value="${category.id}">
                 <button type="submit" class="btn-delete" onclick="return confirm('Bạn có chắc muốn xóa danh mục này?');">
